@@ -22,6 +22,7 @@ namespace axi{
         {
             return $this->mode;
         }
+
         function setMode($mode)
         {
             $this->mode = $mode;
@@ -32,6 +33,7 @@ namespace axi{
         {
             return $this->order;
         }
+
         function setOrder($order)
         {
             $this->order = $order;
