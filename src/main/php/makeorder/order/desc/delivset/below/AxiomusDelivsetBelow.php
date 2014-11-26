@@ -1,6 +1,6 @@
 <?php
 
-namespace axi\makeorder\order\desc\delivset\below;
+namespace b2\sprocket\axiomous\api;
 
 class AxiomusDelivsetBelow
 {

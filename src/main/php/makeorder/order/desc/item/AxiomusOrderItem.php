@@ -1,6 +1,6 @@
 <?php
 
-namespace axi\makeorder\order\desc\item;
+namespace b2\sprocket\axiomous\api;
 
 class AxiomusOrderItem
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace axi\makeorder\auth;
+namespace b2\sprocket\axiomous\api;
 
 class AxiomusAuth
 {

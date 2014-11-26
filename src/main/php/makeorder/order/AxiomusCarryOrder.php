@@ -1,30 +1,30 @@
 <?php
 
-namespace axi\makeorder\order;
+namespace b2\sprocket\axiomous\api;
 
 class AxiomusCarryOrder extends AxiomusOrder
 {
-    protected $bDate;
-    protected $eDate;
+    protected $beginDate;
+    protected $endDate;
     protected $office;
 
-    function getBDate()
+    function getBeginDate()
     {
-        return $this->bDate;
+        return $this->beginDate;
     }
-    function setBDate($date)
+    function setBeginDate($date)
     {
-        $this->bDate = $date;
+        $this->beginDate = $date;
         return $this;
     }
 
-    function getEDate()
+    function getEndDate()
     {
-        return $this->eDate;
+        return $this->endDate;
     }
-    function setEDate($date)
+    function setEndDate($date)
     {
-        $this->eDate = $date;
+        $this->endDate = $date;
         return $this;
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace axi\makeorder\order\desc\serv;
+namespace b2\sprocket\axiomous\api;
 
     class AxiomusExportServices
     {

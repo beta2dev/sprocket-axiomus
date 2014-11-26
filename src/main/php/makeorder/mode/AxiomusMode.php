@@ -1,6 +1,6 @@
 <?php
 
-namespace axi\makeorder\mode;
+namespace b2\sprocket\axiomous\api;
 
 class AxiomusMode
 {

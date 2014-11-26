@@ -1,6 +1,6 @@
 <?php
 
-namespace axi\makeorder\order;
+namespace b2\sprocket\axiomous\api;
 
 class AxiomusExportOrder extends AxiomusOrder
 {

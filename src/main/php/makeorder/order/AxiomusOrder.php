@@ -1,17 +1,17 @@
 <?php
 
-namespace axi\makeorder\order;
+namespace b2\sprocket\axiomous\api;
 
 class AxiomusOrder
 {
-    protected $oKey;
+    protected $okey;
     protected $innerId;
     protected $name;
     protected $address;
     protected $fromMkad;
-    protected $dDate;
-    protected $bTime;
-    protected $eTime;
+    protected $dayDate; // по API d_date - дата (Y-m-d) не ранее сегодня
+    protected $beginTime;
+    protected $endTime;
     protected $inclDelivSum;
     protected $places;
     protected $city;
@@ -21,13 +21,13 @@ class AxiomusOrder
     protected $email;
     protected $description;
 
-    function getOKey()
+    function getOkey()
     {
-        return $this->oKey;
+        return $this->okey;
     }
-    function setOKey($oKey)
+    function setOkey($okey)
     {
-        $this->oKey = $oKey;
+        $this->okey = $okey;
         return $this;
     }
 
@@ -71,33 +71,33 @@ class AxiomusOrder
         return $this;
     }
 
-    function getDDate()
+    function getDayDate()
     {
-        return $this->dDate;
+        return $this->dayDate;
     }
-    function setDDate($dDate)
+    function setDayDate($dayDate)
     {
-        $this->dDate = $dDate;
+        $this->dayDate = $dayDate;
         return $this;
     }
 
-    function getBTime()
+    function getBeginTime()
     {
-        return $this->bTime;
+        return $this->beginTime;
     }
-    function setBTime($bTime)
+    function setBeginTime($beginTime)
     {
-        $this->bTime = $bTime;
+        $this->beginTime = $beginTime;
         return $this;
     }
 
-    function getETime()
+    function getEndTime()
     {
-        return $this->eTime;
+        return $this->endTime;
     }
-    function setETime($eTime)
+    function setEndTime($endTime)
     {
-        $this->eTime = $eTime;
+        $this->endTime = $endTime;
         return $this;
     }
 
