@@ -4,16 +4,17 @@ namespace b2\sprocket\axiomous\api;
 
 class AxiomusMode
 {
-    protected $mode;
-    protected $modeType;
+    protected $orderType; // new, new_carry, update... etc; при запросе стоимости услуги всегда = get_price
+    protected $modeType; // при запросе стоимости услуги type="carry", type="delivery".. etc
 
-    function getMode()
+    function getOrderType()
     {
-        return $this->mode;
+        return $this->orderType;
     }
-    function setMode($mode)
+
+    function setOrderType($orderType)
     {
-        $this->mode = $mode;
+        $this->orderType = $orderType;
         return $this;
     }
 
@@ -21,12 +22,10 @@ class AxiomusMode
     {
         return $this->modeType;
     }
+
     function setModeType($modeType)
     {
         $this->modeType = $modeType;
         return $this;
     }
-
-
-
 }
