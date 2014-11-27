@@ -1,6 +1,6 @@
 <?php
 
-namespace b2\sprocket\axiomous\api;
+namespace b2\sprocket\axiomous\api\order\desc\delivset;
 
 class AxiomusOrderDelivset
 {

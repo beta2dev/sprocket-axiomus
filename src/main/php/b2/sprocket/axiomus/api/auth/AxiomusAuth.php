@@ -1,6 +1,6 @@
 <?php
 
-namespace b2\sprocket\axiomous\api;
+namespace b2\sprocket\axiomous\api\auth;
 
 class AxiomusAuth
 {
@@ -25,5 +25,14 @@ class AxiomusAuth
     {
         $this->ukey = $key;
         return $this;
+    }
+
+    function toArray()
+    {
+        $buf['ukey'] = $this->getUkey();
+        if (isset($this->checkSum)){
+            $buf['checksum'] = $this->getCheckSum();
+        }
+        return $buf;
     }
 }

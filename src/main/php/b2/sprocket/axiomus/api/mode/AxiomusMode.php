@@ -1,6 +1,6 @@
 <?php
 
-namespace b2\sprocket\axiomous\api;
+namespace b2\sprocket\axiomous\api\mode;
 
 class AxiomusMode
 {
@@ -27,5 +27,14 @@ class AxiomusMode
     {
         $this->modeType = $modeType;
         return $this;
+    }
+
+    function toArray()
+    {
+        $buf['orderType'] = $this->getOrderType();
+        if (isset($this->modeType)){
+            $buf['modeType'] = $this->getModeType();
+        }
+        return $buf;
     }
 }
