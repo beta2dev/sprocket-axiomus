@@ -16,17 +16,4 @@ class AxiomusExportOrder extends AxiomusOrder
         return $this;
     }
 
-    function toArray()
-    {
-        $buf = array('okey'=>'getOkey', 'innerId'=>'getInnerId', 'name'=>'getName', 'address'=>'getAddress', 'fromMkad'=>'getFromMkad', 'dayDate'=>'getDayDate',
-            'beginTime'=>'getBeginTime', 'endTime'=>'getEndTime', 'inclDelivSum'=>'getInclDelivSum', 'places'=>'getPlaces', 'city'=>'getCity', 'sms'=>'getSms',
-            'smsSender'=>'getSmsSender', 'gardenRing'=>'getGardenRing', 'email'=>'getEmail', 'exportQuantity'=>'getExportQuantity', 'description'=>'getDescription');
-        $out = array();
-        foreach($buf as $k => $v){
-            if ($v()){
-                $out[$k] = $v();
-            }
-        }
-        return $out;
-    }
 }

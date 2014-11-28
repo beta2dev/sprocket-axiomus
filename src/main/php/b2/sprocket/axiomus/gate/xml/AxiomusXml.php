@@ -11,9 +11,9 @@ class AxiomusXml
         return self::getXml($auth, $string);
     }
 
-    static function makeXmlMode(AxiomusMode $mode)
+    static function makeXmlMode($mode)
     {
-        $string = '<mode xmlns:a="b2tplxml" type="?$modeType" a:text="$orderType"></mode>';
+        $string = '<mode xmlns:a="b2tplxml" type="?$modeType" a:text="$orderType"></mode>'; // TODO проблема в шаблоне
         return self::getXml($mode, $string);
     }
 
@@ -26,11 +26,10 @@ class AxiomusXml
         return self::getXml($order, $string);
     }
 
-    private function getXml($obj, $string)
+    private static function getXml($obj, $string)
     {
         $xml = \b2\templates\XmlTemplate::createFromString($string);
-        $buf = is_array($obj) ? $obj : $obj->toArray();
-        $xml->setAttributes($buf);
+        $xml->setAttributes($obj);
         return $xml->makeSimpleXML()->asXML();
     }
 }

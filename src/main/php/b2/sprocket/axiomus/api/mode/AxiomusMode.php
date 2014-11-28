@@ -29,12 +29,4 @@ class AxiomusMode
         return $this;
     }
 
-    function toArray()
-    {
-        $buf['orderType'] = $this->getOrderType();
-        if (isset($this->modeType)){
-            $buf['modeType'] = $this->getModeType();
-        }
-        return $buf;
-    }
 }

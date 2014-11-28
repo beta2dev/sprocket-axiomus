@@ -27,12 +27,4 @@ class AxiomusAuth
         return $this;
     }
 
-    function toArray()
-    {
-        $buf['ukey'] = $this->getUkey();
-        if (isset($this->checkSum)){
-            $buf['checksum'] = $this->getCheckSum();
-        }
-        return $buf;
-    }
 }
