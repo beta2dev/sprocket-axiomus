@@ -2,7 +2,7 @@
 
 namespace b2\sprocket\axiomous\api\order;
 
-class AxiomusCarryOrder extends AxiomusOrder
+class CarryOrder extends Order
 {
     protected $beginDate;
     protected $endDate;

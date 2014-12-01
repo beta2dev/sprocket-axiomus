@@ -2,7 +2,7 @@
 
 namespace b2\sprocket\axiomous\api\order\desc\serv;
 
-class AxiomusOrderServices
+class OrderServices
 {
     protected $cash;
     protected $cheque;

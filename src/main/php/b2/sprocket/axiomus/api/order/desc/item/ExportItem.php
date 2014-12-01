@@ -2,7 +2,7 @@
 
 namespace b2\sprocket\axiomous\api\order\item;
 
-class AxiomusExportItem extends AxiomusOrderItem
+class ExportItem extends OrderItem
 {
     protected $oId;
 

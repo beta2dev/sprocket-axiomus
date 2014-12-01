@@ -2,7 +2,7 @@
 
 namespace b2\sprocket\axiomous\api\order\desc\delivset;
 
-class AxiomusOrderDelivset
+class OrderDelivset
 {
     protected $abovePrice;
     protected $belows;

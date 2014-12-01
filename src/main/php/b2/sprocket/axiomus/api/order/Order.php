@@ -2,7 +2,7 @@
 
 namespace b2\sprocket\axiomous\api\order;
 
-class AxiomusOrder
+class Order
 {
     protected $okey;
     protected $innerId;

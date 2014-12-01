@@ -2,7 +2,7 @@
 
 namespace b2\sprocket\axiomous\api\order\desc;
 
-class AxiomusOrderContent
+class OrderContent
 {
     protected $contacts;
     protected $description;

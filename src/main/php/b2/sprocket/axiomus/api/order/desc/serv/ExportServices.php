@@ -2,7 +2,7 @@
 
 namespace b2\sprocket\axiomous\api\order\desc\serv;
 
-    class AxiomusExportServices
+    class ExportServices
     {
         protected $warrant;
         protected $transit;

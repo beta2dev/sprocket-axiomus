@@ -2,7 +2,7 @@
 
 namespace b2\sprocket\axiomous\api\mode;
 
-class AxiomusMode
+class Mode
 {
     protected $orderType; // new, new_carry, update... etc; при запросе стоимости услуги всегда = get_price
     protected $modeType; // при запросе стоимости услуги type="carry", type="delivery".. etc

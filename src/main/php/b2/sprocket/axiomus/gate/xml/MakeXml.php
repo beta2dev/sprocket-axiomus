@@ -1,8 +1,8 @@
 <?php
 
-namespace b2\sprocket\axiomous\api\xml;
+namespace b2\sprocket\axiomous\gate\xml;
 
-class AxiomusXml
+class MakeXml
 {
 
     static function makeXmlAuth($auth)
@@ -13,7 +13,7 @@ class AxiomusXml
 
     static function makeXmlMode($mode)
     {
-        $string = '<mode xmlns:a="b2tplxml" type="?$modeType" a:text="$orderType"></mode>'; // TODO проблема в шаблоне
+        $string = '<mode xmlns:a="b2tplxml" type="?$modeType" a:text="$orderType"/>';
         return self::getXml($mode, $string);
     }
 

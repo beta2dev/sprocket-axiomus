@@ -2,7 +2,7 @@
 
 namespace b2\sprocket\axiomous\api\order;
 
-class AxiomusSelfExportOrder extends AxiomusOrder
+class SelfExportOrder extends Order
 {
     protected $car;
 

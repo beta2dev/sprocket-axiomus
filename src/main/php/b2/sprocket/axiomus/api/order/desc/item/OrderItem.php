@@ -2,7 +2,7 @@
 
 namespace b2\sprocket\axiomous\api\order\item;
 
-class AxiomusOrderItem
+class OrderItem
 {
     protected $name;
     protected $weight;

@@ -2,7 +2,7 @@
 
 namespace b2\sprocket\axiomous\api\auth;
 
-class AxiomusAuth
+class Auth
 {
     protected $ukey;
     protected $checkSum;
