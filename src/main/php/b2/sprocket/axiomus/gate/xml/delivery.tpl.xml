@@ -1,5 +1,8 @@
 <singleorder xmlns:a="b2tplxml">
     <auth a:bind="$auth" ukey="@ukey" checksum="@checksum"/>
     <mode a:bind="$mode" a:text="@orderType"/>
-    <order></order>
+    <order xmlns:a="b2tplxml" okey="?@okey" inner_id="?@innerId" name="@name" b_date="?@beginDate" e_date="?@endDate" address="?@address"
+           from_mkad="?@fromMkad" d_date="?@dayDate" b_time="?@beginTime" e_time="?@endTime" incl_deliv_sum="?@inclDelivSum" places="@places"
+           city="?@city" sms="?@sms" sms_sender="?@smsSender" garden_ring="?@gardenRing" email="?@email" car="?@car" office="?@office" export_quantity="?@exportQuantity"
+           a:text="@description" a:bind="$order"></order>
 </singleorder>

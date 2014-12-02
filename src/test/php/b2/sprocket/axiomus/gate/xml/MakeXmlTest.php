@@ -55,14 +55,32 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
     {
         $delivery = new SingleOrderDeliveryRequest();
         $auth = new Auth();
-        $order = new Order();
         $xml = new MakeXml();
-
+        $order = array(
+            'order' => [
+                'innerId'=>'123',
+                'name'=>'Кл',
+                'address'=>'Москва...',
+                'fromMkad'=>'0',
+                'dayDate'=>'2009-16-15',
+                'beginTime'=>'12:00',
+                'endTime'=>'13:00',
+                'inclDelivSum'=>'200.15',
+                'places'=>'1',
+                'city'=>'0',
+                'sms'=>'8905',
+                'description'=>'a'
+            ]);
         $auth->setCheckSum('123qwe')->setUkey('321ewq');
 
         $delivery->setMode('new')->setAuth($auth)->setOrder($order);
         $this->assertXmlStringEqualsXmlString(
-            XML_HEADER . '<singleorder><auth ukey="321ewq" checksum="123qwe"/><mode>new</mode><order>a</order></singleorder>',
+            XML_HEADER .
+            '<singleorder>
+                <auth ukey="321ewq" checksum="123qwe"/>
+                <mode>new</mode>
+                <order inner_id="123" name="Кл" address="Москва..." from_mkad="0" d_date="2009-16-15" b_time="12:00" e_time="13:00" incl_deliv_sum="200.15" places="1" city="0" sms="8905">b</order>
+            </singleorder>',
             $xml->SingleOrderDeliveryRequest($delivery)
         );
     }
