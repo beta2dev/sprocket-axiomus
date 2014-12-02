@@ -2,6 +2,7 @@
 
 namespace b2\sprocket\axiomous\api;
 
+use b2\sprocket\axiomous\api\auth\Auth;
 use b2\sprocket\axiomous\api\order\CarryOrder;
 use b2\sprocket\axiomous\api\order\ExportOrder;
 use b2\sprocket\axiomous\api\order\Order;
@@ -19,7 +20,16 @@ class SingleOrderDeliveryRequest extends SingleOrderRequest
 
     function setAuth($auth)
     {
-        $this->auth = $auth;
+        if (is_array($auth)){
+            $this->auth = new Auth();
+            foreach($auth as $key => $val){
+                $str = 'set' . ucfirst($key);
+                call_user_func(array($this->auth, $str), $val);
+            }
+        }
+        else {
+            $this->auth = $auth;
+        }
         return $this;
     }
 

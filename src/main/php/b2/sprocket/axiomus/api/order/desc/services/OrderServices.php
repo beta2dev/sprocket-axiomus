@@ -1,6 +1,6 @@
 <?php
 
-namespace b2\sprocket\axiomous\api\order\desc\serv;
+namespace b2\sprocket\axiomous\api\order\desc\services;
 
 class OrderServices
 {

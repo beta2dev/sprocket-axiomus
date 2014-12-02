@@ -18,9 +18,9 @@ class MakeXml
 
     function SingleOrderDeliveryRequest($delivery)
     {
-        $file = __DIR__ . DIRECTORY_SEPARATOR . 'delivery.tpl.xml';
+        $file = __DIR__ . DIRECTORY_SEPARATOR . 'deliveryOrder.tpl.xml';
         return $this->getXml($delivery, $file);
-    }
+    }/*
     static function makeXmlAuth($auth)
     {
         $string = '<auth xmlns:a="b2tplxml" ukey="$ukey" checksum="?$checksum" />';
@@ -41,7 +41,7 @@ class MakeXml
                     a:text="$description"></order>';
         return self::getXml($order, $string);
     }
-
+*/
     private function getXml($obj, $string)
     {
         if (file_exists($string)){

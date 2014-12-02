@@ -3,7 +3,7 @@
 namespace b2\sprocket\axiomous\gate\xml;
 
 use b2\sprocket\axiomous\api\auth\Auth;
-use b2\sprocket\axiomous\api\order\Order;
+use b2\sprocket\axiomous\api\order\desc\OrderContent;
 use b2\sprocket\axiomous\api\SingleOrderDeliveryRequest;
 
 define('B2_FOUNDATION_TEMPLATES','C:\Work\Axiomus\foundation\src\main\php\b2\templates');
@@ -13,6 +13,10 @@ require_once 'C:\Work\Axiomus\sprocket-axiomus\src\main\php\b2\sprocket\axiomus\
 require_once 'C:\Work\Axiomus\sprocket-axiomus\src\main\php\b2\sprocket\axiomus\api\auth\Auth.php';
 require_once 'C:\Work\Axiomus\sprocket-axiomus\src\main\php\b2\sprocket\axiomus\api\mode\Mode.php';
 require_once 'C:\Work\Axiomus\sprocket-axiomus\src\main\php\b2\sprocket\axiomus\api\order\Order.php';
+require_once 'C:\Work\Axiomus\sprocket-axiomus\src\main\php\b2\sprocket\axiomus\api\order\desc\OrderContent.php';
+require_once 'C:\Work\Axiomus\sprocket-axiomus\src\main\php\b2\sprocket\axiomus\api\order\desc\services\OrderServices.php';
+require_once 'C:\Work\Axiomus\sprocket-axiomus\src\main\php\b2\sprocket\axiomus\api\order\desc\services\ExportServices.php';
+require_once 'C:\Work\Axiomus\sprocket-axiomus\src\main\php\b2\sprocket\axiomus\api\order\desc\item\OrderItem.php';
 require_once 'C:\Work\Axiomus\sprocket-axiomus\src\main\php\b2\sprocket\axiomus\api\SingleOrderRequest.php';
 require_once 'C:\Work\Axiomus\sprocket-axiomus\src\main\php\b2\sprocket\axiomus\api\SingleOrderStatusRequest.php';
 require_once 'C:\Work\Axiomus\sprocket-axiomus\src\main\php\b2\sprocket\axiomus\api\SingleOrderStatusListRequest.php';
@@ -56,20 +60,36 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
         $delivery = new SingleOrderDeliveryRequest();
         $auth = new Auth();
         $xml = new MakeXml();
+        $orderContent = new OrderContent();
+        $services = ['cash' => 'yes', 'cheque' => 'no'];
+        $items = [
+            [
+                'name' => 'товар 1',
+                'weight' => 2.000,
+                'quantity' => 3,
+                'price' => 340.55
+            ],
+            [
+                'name' => 'товар 2',
+                'weight' => 3.000,
+                'quantity' => 5,
+                'price' => 555.55
+            ]
+        ];
+        $orderContent->setContacts('тел. 8905')->setDescription('сзади')->setServices($services)->setItems($items);
         $order = array(
             'order' => [
-                'innerId'=>'123',
-                'name'=>'Кл',
-                'address'=>'Москва...',
-                'fromMkad'=>'0',
-                'dayDate'=>'2009-16-15',
-                'beginTime'=>'12:00',
-                'endTime'=>'13:00',
-                'inclDelivSum'=>'200.15',
-                'places'=>'1',
-                'city'=>'0',
-                'sms'=>'8905',
-                'description'=>'a'
+                'innerId' => '123',
+                'name' => 'Кл',
+                'address' => 'Москва...',
+                'fromMkad' => '0',
+                'dayDate' => '2009-16-15',
+                'beginTime' => '12:00',
+                'endTime' => '13:00',
+                'places' => '1',
+                'city' => '0',
+                'sms' => '8905',
+                'orderContent' => $orderContent
             ]);
         $auth->setCheckSum('123qwe')->setUkey('321ewq');
 
@@ -79,12 +99,21 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
             '<singleorder>
                 <auth ukey="321ewq" checksum="123qwe"/>
                 <mode>new</mode>
-                <order inner_id="123" name="Кл" address="Москва..." from_mkad="0" d_date="2009-16-15" b_time="12:00" e_time="13:00" incl_deliv_sum="200.15" places="1" city="0" sms="8905">b</order>
+                <order inner_id="123" name="Кл" address="Москва..." from_mkad="0" d_date="2009-16-15" b_time="12:00" e_time="13:00" places="1" city="0" sms="8905">
+                    <contacts>тел. 8905</contacts>
+                    <description>сзади</description>
+                    <services cash="yes" cheque="no" />
+                    <items>
+                        <item name="товар 1" weight="2.000" quantity="3" price="340.55"/>
+                        <item name="товар 2" weight="3.000" quantity="5" price="555.55"/>
+                    </items>
+                </order>
             </singleorder>',
             $xml->SingleOrderDeliveryRequest($delivery)
         );
     }
     /*
+     *
         function testMakeXmlAuth()
         {
             $my = new Auth();

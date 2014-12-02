@@ -8,6 +8,17 @@ class OrderItem
     protected $weight;
     protected $quantity;
     protected $price;
+    protected $orderId;
+
+    function getOrderId()
+    {
+        return $this->orderId;
+    }
+    function setOrderId($id)
+    {
+        $this->orderId = $id;
+        return $this;
+    }
 
     function getName()
     {

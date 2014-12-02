@@ -19,7 +19,7 @@ class Order
     protected $smsSender;
     protected $gardenRing;
     protected $email;
-    protected $description;
+    protected $orderContent;
 
     function getOkey()
     {
@@ -171,13 +171,13 @@ class Order
         return $this;
     }
 
-    function getDescription()
+    function getOrderContent()
     {
-        return $this->description;
+        return $this->orderContent;
     }
-    function setDescription($description)
+    function setOrderContent($content)
     {
-        $this->description = $description;
+        $this->orderContent = $content;
         return $this;
     }
 
