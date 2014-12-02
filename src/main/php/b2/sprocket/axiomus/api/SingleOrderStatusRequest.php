@@ -2,10 +2,9 @@
 
 namespace b2\sprocket\axiomous\api;
 
-class SingleOrderStatusReques extends SingleOrder
+class SingleOrderStatusRequest extends SingleOrderRequest
 {
     protected $okey;
-    protected $okeylist;
 
     function getOkey()
     {
@@ -15,17 +14,6 @@ class SingleOrderStatusReques extends SingleOrder
     function setOkey($okey)
     {
         $this->okey = $okey;
-        return $this;
-    }
-
-    function getOkeylist()
-    {
-        return $this->okeylist;
-    }
-
-    function setOkeylist($okeylist)
-    {
-        $this->okeylist = $okeylist;
         return $this;
     }
 }

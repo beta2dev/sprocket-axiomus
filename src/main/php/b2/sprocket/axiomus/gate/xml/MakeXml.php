@@ -4,7 +4,23 @@ namespace b2\sprocket\axiomous\gate\xml;
 
 class MakeXml
 {
+    function SingleOrderStatusRequest($status)
+    {
+        $file = __DIR__ . DIRECTORY_SEPARATOR . 'status.tpl.xml';
+        return $this->getXml($status, $file);
+    }
 
+    function SingleOrderStatusListRequest($status)
+    {
+        $file = __DIR__ . DIRECTORY_SEPARATOR . 'statuslist.tpl.xml';
+        return $this->getXml($status, $file);
+    }
+
+    function SingleOrderDeliveryRequest($delivery)
+    {
+        $file = __DIR__ . DIRECTORY_SEPARATOR . 'delivery.tpl.xml';
+        return $this->getXml($delivery, $file);
+    }
     static function makeXmlAuth($auth)
     {
         $string = '<auth xmlns:a="b2tplxml" ukey="$ukey" checksum="?$checksum" />';
@@ -26,9 +42,14 @@ class MakeXml
         return self::getXml($order, $string);
     }
 
-    private static function getXml($obj, $string)
+    private function getXml($obj, $string)
     {
-        $xml = \b2\templates\XmlTemplate::createFromString($string);
+        if (file_exists($string)){
+            $xml = \b2\templates\XmlTemplate::createFromFile($string);
+        }
+        else{
+            $xml = \b2\templates\XmlTemplate::createFromString($string);
+        }
         $xml->setAttributes($obj);
         return $xml->makeSimpleXML()->asXML();
     }

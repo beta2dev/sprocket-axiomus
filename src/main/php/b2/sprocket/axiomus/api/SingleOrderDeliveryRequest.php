@@ -2,7 +2,9 @@
 
 namespace b2\sprocket\axiomous\api;
 
-class SingleOrderDeliveryRequest extends SingleOrder
+use b2\sprocket\axiomous\api\auth\Auth;
+
+class SingleOrderDeliveryRequest extends SingleOrderRequest
 {
     protected $auth;
     protected $order;
@@ -14,7 +16,13 @@ class SingleOrderDeliveryRequest extends SingleOrder
 
     function setAuth($auth)
     {
-        $this->auth = $auth;
+        if (is_string($auth)){
+            $this->auth = new Auth();
+
+        }
+        else {
+            $this->auth = $auth;
+        }
         return $this;
     }
 
