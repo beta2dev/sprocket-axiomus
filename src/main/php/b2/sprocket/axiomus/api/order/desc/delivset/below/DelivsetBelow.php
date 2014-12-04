@@ -13,7 +13,7 @@ class DelivsetBelow
     }
     function setBelowSum($sum)
     {
-        $this->belowSum = $sum;
+        $this->belowSum = number_format($sum, 3, '.', '');
         return $this;
     }
 
@@ -23,7 +23,7 @@ class DelivsetBelow
     }
     function setPrice($price)
     {
-        $this->price = $price;
+        $this->price = number_format($price, 3);
         return $this;
     }
 }

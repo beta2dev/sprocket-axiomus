@@ -9,6 +9,8 @@ class OrderItem
     protected $quantity;
     protected $price;
     protected $orderId;
+    protected $expmode;
+
 
     function getOrderId()
     {
@@ -36,7 +38,7 @@ class OrderItem
     }
     function setWeight($weight)
     {
-        $this->weight = $weight;
+        $this->weight = number_format($weight, 3);
         return $this;
     }
 
@@ -56,7 +58,17 @@ class OrderItem
     }
     function setPrice($price)
     {
-        $this->price = $price;
+        $this->price = number_format($price, 2);
+        return $this;
+    }
+
+    function getExpmode()
+    {
+        return $this->expmode;
+    }
+    function setExpmode($expmode)
+    {
+        $this->expmode = $expmode;
         return $this;
     }
 }

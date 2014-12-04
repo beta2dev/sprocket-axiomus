@@ -2,11 +2,13 @@
 
 namespace b2\sprocket\axiomous\api\order\desc\delivset;
 
+use b2\sprocket\axiomous\api\order\desc\delivset\below\DelivsetBelow;
+
 class OrderDelivset
 {
     protected $abovePrice;
-    protected $belows;
     protected $returnPrice;
+    protected $belows;
 
     function getAbovePrice()
     {
@@ -14,7 +16,7 @@ class OrderDelivset
     }
     function setAbovePrice($price)
     {
-        $this->abovePrice = $price;
+        $this->abovePrice = number_format($price, 3);
         return $this;
     }
 
@@ -24,7 +26,18 @@ class OrderDelivset
     }
     function setBelows($below)
     {
-        $this->belows = $below;
+        if (is_array($below)){
+            foreach ($below as $key => $val){
+                $this->belows[] = new DelivsetBelow();
+                foreach ($val as $k => $v){
+                    $str = 'set' . ucfirst($k);
+                    call_user_func(array($this->belows[$key], $str), $v);
+                }
+            }
+        }
+        else{
+            $this->belows[] = $below;
+        }
         return $this;
     }
 
@@ -34,7 +47,18 @@ class OrderDelivset
     }
     function setReturnPrice($price)
     {
-        $this->returnPrice = $price;
+        $this->returnPrice = number_format($price, 3);
         return $this;
     }
 }
+//        belows = [
+// *        [
+// *              belowPrice = z,
+// *              price = n;
+// *        ],
+// *          ...
+// *        [
+// *              belowPrice = z,
+// *              price = n;
+// *        }
+// *      ]

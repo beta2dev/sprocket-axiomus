@@ -2,6 +2,8 @@
 
 namespace b2\sprocket\axiomous\api\order;
 
+use b2\sprocket\axiomous\api\order\desc\OrderContent;
+
 class Order
 {
     protected $okey;
@@ -19,6 +21,8 @@ class Order
     protected $smsSender;
     protected $gardenRing;
     protected $email;
+    protected $discountValue;
+    protected $discountUnit;
     protected $orderContent;
 
     function getOkey()
@@ -67,7 +71,7 @@ class Order
     }
     function setFromMkad($fromMkad)
     {
-        $this->fromMkad = $fromMkad;
+        $this->fromMkad = number_format($fromMkad, 2);
         return $this;
     }
 
@@ -77,7 +81,12 @@ class Order
     }
     function setDayDate($dayDate)
     {
-        $this->dayDate = $dayDate;
+        if (is_string($dayDate)){
+            $this->dayDate = date('Y-m-d', strtotime($dayDate));
+        }
+        else{
+            $this->dayDate = $dayDate;
+        }
         return $this;
     }
 
@@ -87,7 +96,13 @@ class Order
     }
     function setBeginTime($beginTime)
     {
-        $this->beginTime = $beginTime;
+        $type = gettype($beginTime);
+        if (($type == 'integer') || ($type == 'string')){
+            $this->beginTime = date('H:00', strtotime($beginTime));
+        }
+        else{
+            $this->beginTime = $beginTime;
+        }
         return $this;
     }
 
@@ -107,7 +122,7 @@ class Order
     }
     function setInclDelivSum($inclDelivSum)
     {
-        $this->inclDelivSum = $inclDelivSum;
+        $this->inclDelivSum = number_format($inclDelivSum, 2);
         return $this;
     }
 
@@ -171,13 +186,48 @@ class Order
         return $this;
     }
 
+    function getDiscountValue()
+    {
+        return $this->discountValue;
+    }
+    function setDiscountValue($discountValue)
+    {
+        $this->discountValue = number_format($discountValue, 2);
+        return $this;
+    }
+
+    function getDiscountUnit()
+    {
+        return $this->discountUnit;
+    }
+    function setDiscountUnit($discountUnit)
+    {
+        if ($discountUnit == 0){
+            $this->discountUnit = $discountUnit;
+        }
+        else{
+            $this->discountUnit = number_format($discountUnit, 2);
+        }
+        return $this;
+    }
+
     function getOrderContent()
     {
         return $this->orderContent;
     }
     function setOrderContent($content)
     {
-        $this->orderContent = $content;
+        if (is_array($content)){
+            $this->orderContent = new OrderContent();
+            foreach($content as $k => $v){
+                $str = 'set' . ucfirst($k);
+                call_user_func(array($this->orderContent, $str), $v);
+            }
+        }
+        else{
+            $this->orderContent = $content;
+        }
+
         return $this;
     }
 

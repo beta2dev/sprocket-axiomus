@@ -58,7 +58,6 @@ class SingleOrderDeliveryRequest extends SingleOrderRequest
                             $this->order = new SelfExportOrder();
                             break;
                     }
-
                     foreach($order[$v] as $key => $val){
                         $str = 'set' . ucfirst($key);
                         call_user_func(array($this->order, $str), $val);
