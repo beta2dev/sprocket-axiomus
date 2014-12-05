@@ -6,6 +6,7 @@ use b2\sprocket\axiomous\api\auth\Auth;
 use b2\sprocket\axiomous\api\order\CarryOrder;
 use b2\sprocket\axiomous\api\order\ExportOrder;
 use b2\sprocket\axiomous\api\order\Order;
+use b2\sprocket\axiomous\api\order\OrderPost;
 use b2\sprocket\axiomous\api\order\SelfExportOrder;
 
 class SingleOrderDeliveryRequest extends SingleOrderRequest
@@ -41,7 +42,7 @@ class SingleOrderDeliveryRequest extends SingleOrderRequest
     function setOrder($order)
     {
         if (is_array($order)){
-            $orderTypes = ['carry','export','order','selfExport'];
+            $orderTypes = ['carry','export','order','selfExport','post'];
             foreach ($orderTypes as $v){
                 if (isset($order[$v])){
                     switch ($v){
@@ -56,6 +57,9 @@ class SingleOrderDeliveryRequest extends SingleOrderRequest
                             break;
                         case 'selfExport':
                             $this->order = new SelfExportOrder();
+                            break;
+                        case 'post':
+                            $this->order = new OrderPost();
                             break;
                     }
                     foreach($order[$v] as $key => $val){

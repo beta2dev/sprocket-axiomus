@@ -8,6 +8,66 @@ class OrderAddress
     protected $region;
     protected $area;
     protected $poluchAddress;
+    protected $building;
+    protected $apartment;
+    protected $street;
+    protected $house;
+    protected $carrymode;
+
+    function getCarrymode()
+    {
+        return $this->carrymode;
+    }
+
+    function setCarrymode($carrymode)
+    {
+        $this->carrymode = $carrymode;
+        return $this;
+    }
+
+    function getStreet()
+    {
+        return $this->street;
+    }
+
+    function setStreet($street)
+    {
+        $this->street = $street;
+        return $this;
+    }
+
+    function getHouse()
+    {
+        return $this->house;
+    }
+
+    function setHouse($house)
+    {
+        $this->house = $house;
+        return $this;
+    }
+
+    function getBuilding()
+    {
+        return $this->building;
+    }
+
+    function setBuilding($building)
+    {
+        $this->building = $building;
+        return $this;
+    }
+
+    function getApartment()
+    {
+        return $this->apartment;
+    }
+
+    function setApartment($apartment)
+    {
+        $this->apartment = $apartment;
+        return $this;
+    }
 
     function getIndex()
     {

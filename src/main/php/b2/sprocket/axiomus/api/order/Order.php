@@ -24,6 +24,7 @@ class Order
     protected $discountValue;
     protected $discountUnit;
     protected $orderContent;
+    protected $beginDate;
 
     function getOkey()
     {
@@ -96,9 +97,8 @@ class Order
     }
     function setBeginTime($beginTime)
     {
-        $type = gettype($beginTime);
-        if (($type == 'integer') || ($type == 'string')){
-            $this->beginTime = date('H:00', strtotime($beginTime));
+        if (is_string($beginTime)){
+            $this->beginTime = date_format(date_create($beginTime), 'H:i');
         }
         else{
             $this->beginTime = $beginTime;
@@ -112,7 +112,12 @@ class Order
     }
     function setEndTime($endTime)
     {
-        $this->endTime = $endTime;
+        if (is_string($endTime)){
+            $this->endTime = date_format(date_create($endTime), 'H:i');
+        }
+        else{
+            $this->endTime = $endTime;
+        }
         return $this;
     }
 
@@ -183,6 +188,22 @@ class Order
     function setEmail($email)
     {
         $this->email = $email;
+        return $this;
+    }
+
+    function getBeginDate()
+    {
+        return $this->beginDate;
+    }
+
+    function setBeginDate($beginDate)
+    {
+        if (is_string($beginDate)){
+            $this->beginDate = date('Y-m-d', strtotime($beginDate));
+        }
+        else{
+            $this->beginDate = $beginDate;
+        }
         return $this;
     }
 

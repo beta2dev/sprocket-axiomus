@@ -2,14 +2,17 @@
 
 namespace b2\sprocket\axiomous\api\order\desc;
 
+use b2\sprocket\axiomous\api\order\desc\address\OrderAddress;
 use b2\sprocket\axiomous\api\order\desc\delivset\OrderDelivset;
 use b2\sprocket\axiomous\api\order\desc\discountset\OrderDiscountset;
 use b2\sprocket\axiomous\api\order\desc\services\ExportServices;
 use b2\sprocket\axiomous\api\order\desc\services\OrderServices;
+use b2\sprocket\axiomous\api\order\desc\services\PostServices;
 use b2\sprocket\axiomous\api\order\item\OrderItem;
 
 class OrderContent
 {
+    protected $address;
     protected $contacts;
     protected $description;
     protected $services;
@@ -17,6 +20,24 @@ class OrderContent
     protected $item;
     protected $delivset;
     protected $discountset;
+
+    function getAddress()
+    {
+        return $this->address;
+    }
+
+    function setAddress($address)
+    {
+        if (is_array($address)){
+            $this->address = new OrderAddress();
+            foreach($address as $k => $v){
+                $str = 'set' . ucfirst($k);
+                call_user_func(array($this->address, $str), $v);
+            }
+        }
+        $this->address = $address;
+        return $this;
+    }
 
     function getContacts()
     {
@@ -48,15 +69,22 @@ class OrderContent
     function setServices($serv)
     {
         if (is_array($serv)){
-            if (isset($serv['warrant'])){
-                $this->services = new ExportServices();
-            }
-            else{
-                $this->services = new OrderServices();
-            }
-            foreach($serv as $key => $val){
-                $str = 'set' . ucfirst($key);
-                call_user_func(array($this->services, $str), $val);
+            foreach ($serv as $k => $v){
+                switch ($k){
+                    case 'warrant': case 'transit':
+                        $this->services = new ExportServices();
+                        break;
+                    case 'cash': case 'cheque': case 'card':
+                        $this->services = new OrderServices();
+                        break;
+                    default:
+                        $this->services = new PostServices();
+                }
+                foreach($serv as $key => $val){
+                    $str = 'set' . ucfirst($key);
+                    call_user_func(array($this->services, $str), $val);
+                }
+                break;
             }
         }
         else{
@@ -85,6 +113,7 @@ class OrderContent
         }
         return $this;
     }
+
     function getItems()
     {
         return $this->items;
@@ -114,28 +143,6 @@ class OrderContent
         return $this;
     }
 
-
-    /*$items = [
-            [
-                'name' => 'товар 1',
-                'weight' => 2.000,
-                'quantity' => 3,
-                'price' => 340.55
-            ],
-            [
-                'name' => 'товар 2',
-                'weight' => 3.000,
-                'quantity' => 5,
-                'price' => 555.55
-            ]
-        ];
-    $items = [
-            'name' => 'товар 1',
-            'weight' => 2.000,
-            'quantity' => 3,
-            'price' => 340.55
-    ]
-    */
     function getDelivset()
     {
         return $this->delivset;
@@ -175,18 +182,3 @@ class OrderContent
         return $this;
     }
 }
-//   delivset = [
-// *      abovePrice = x
-//*       returnPrice = y
-//*       belows = [
-// *          [
-// *              belowPrice = z,
-// *              price = n;
-// *          ],
-// *          ...
-// *          [
-// *              belowPrice = z,
-// *              price = n;
-// *          ]
-// *      ]
-// * ]*/

@@ -22,6 +22,24 @@ class MakeXml
         return $this->getXml($delivery, $file);
     }
 
+    function SingleOrderCarryRequest($delivery)
+    {
+        $file = __DIR__ . DIRECTORY_SEPARATOR . 'carryRequest.tpl.xml';
+        return $this->getXml($delivery, $file);
+    }
+
+    function SingleOrderPostRequest($delivery)
+    {
+        $file = __DIR__ . DIRECTORY_SEPARATOR . 'postRequest.tpl.xml';
+        return $this->getXml($delivery, $file);
+    }
+
+    function SingleOrderDpdRequest($delivery)
+    {
+        $file = __DIR__ . DIRECTORY_SEPARATOR . 'dpdRequest.tpl.xml';
+        return $this->getXml($delivery, $file);
+    }
+
     function SingleOrderCarryStatusRequest($status)
     {
         $file = __DIR__ . DIRECTORY_SEPARATOR . 'carryStatusOrder.tpl.xml';

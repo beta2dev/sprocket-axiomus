@@ -21,13 +21,17 @@ require_once B2_AXIOMUS_TEMPLATES .'\gate\xml\MakeXml.php';
 require_once B2_AXIOMUS_TEMPLATES . '\api\auth\Auth.php';
 require_once B2_AXIOMUS_TEMPLATES . '\api\mode\Mode.php';
 require_once B2_AXIOMUS_TEMPLATES . '\api\order\Order.php';
+require_once B2_AXIOMUS_TEMPLATES . '\api\order\OrderPost.php';
+require_once B2_AXIOMUS_TEMPLATES . '\api\order\CarryOrder.php';
 require_once B2_AXIOMUS_TEMPLATES . '\api\order\desc\OrderContent.php';
 require_once B2_AXIOMUS_TEMPLATES . '\api\order\desc\delivset\below\DelivsetBelow.php';
+require_once B2_AXIOMUS_TEMPLATES . '\api\order\desc\address\OrderAddress.php';
 require_once B2_AXIOMUS_TEMPLATES . '\api\order\desc\delivset\OrderDelivset.php';
 require_once B2_AXIOMUS_TEMPLATES . '\api\order\desc\discountset\below\DiscountBelow.php';
 require_once B2_AXIOMUS_TEMPLATES . '\api\order\desc\discountset\OrderDiscountset.php';
 require_once B2_AXIOMUS_TEMPLATES . '\api\order\desc\services\OrderServices.php';
 require_once B2_AXIOMUS_TEMPLATES . '\api\order\desc\services\ExportServices.php';
+require_once B2_AXIOMUS_TEMPLATES . '\api\order\desc\services\PostServices.php';
 require_once B2_AXIOMUS_TEMPLATES . '\api\order\desc\item\OrderItem.php';
 require_once B2_AXIOMUS_TEMPLATES . '\api\SingleOrderRequest.php';
 require_once B2_AXIOMUS_TEMPLATES . '\api\SingleOrderStatusRequest.php';
@@ -54,6 +58,30 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
         $this->assertXmlStringEqualsXmlString(
             XML_HEADER . '<singleorder><mode>status</mode><okey>23fs2fsd3</okey></singleorder>',
             $xml->SingleOrderStatusRequest($status)
+        );
+    }
+
+    function testSingleOrderCarryStatus_MskStP()
+    {
+        $status = new SingleOrderCarryStatusRequest();
+        $xml = new MakeXml();
+        $status->setMode('get_carry')->setAuth('123qwe');
+
+        $this->assertXmlStringEqualsXmlString(
+            XML_HEADER . '<singleorder><mode>get_carry</mode><auth ukey="123qwe"/></singleorder>',
+            $xml->SingleOrderCarryStatusRequest($status)
+        );
+    }
+
+    function testSingleOrderCarryStatus_DPD()
+    {
+        $status = new SingleOrderCarryStatusRequest();
+        $xml = new MakeXml();
+        $status->setMode('get_dpd_pickup')->setAuth('321ewq');
+
+        $this->assertXmlStringEqualsXmlString(
+            XML_HEADER . '<singleorder><mode>get_dpd_pickup</mode><auth ukey="321ewq"/></singleorder>',
+            $xml->SingleOrderCarryStatusRequest($status)
         );
     }
 
@@ -377,29 +405,301 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
         );
     }
 
-    function testSingleOrderCarryStatus_MskStP()
+    function testSingleOrderPostRequest()
     {
-        $status = new SingleOrderCarryStatusRequest();
+        $delivery = new SingleOrderDeliveryRequest();
+        $auth = new Auth();
         $xml = new MakeXml();
-        $status->setMode('get_carry')->setAuth('123qwe');
-
+        $services = [
+            'valuation' => true,
+            'fragile' => false,
+            'cod' => false
+        ];
+        $items = [
+            [
+                'name' => 'товар 1',
+                'weight' => 2.000,
+                'quantity' => 3,
+                'price' => 340.55
+            ],
+            [
+                'name' => 'товар 2',
+                'weight' => 3.000,
+                'quantity' => 5,
+                'price' => 555.55
+            ]
+        ];
+        $address = [
+            'index' => '321123',
+            'region' => 'Камчатский край',
+            'area' => 'Москва',
+            'poluchAddress' => 'ул. Блабла, д.3, кв.20'
+        ];
+        $orderContent = [
+            'contacts' => 'тел. 8905',
+            'services' => $services,
+            'address' => $address,
+            'items' => $items
+        ];
+        $order = [
+            'post' => [
+                'innerId' => '123',
+                'okey' => 'qwe123',
+                'name' => 'Кл',
+                'beginDate' => '2009-12-14',
+                'sms' => '8905',
+                'postType' => 0,
+                'orderContent' => $orderContent
+            ]
+        ];
+        $auth->setCheckSum('123qwe')->setUkey('321ewq');
+        $delivery->setMode('new_post')->setAuth($auth)->setOrder($order);
         $this->assertXmlStringEqualsXmlString(
-            XML_HEADER . '<singleorder><mode>get_carry</mode><auth ukey="123qwe"/></singleorder>',
-            $xml->SingleOrderCarryStatusRequest($status)
+            XML_HEADER .
+            '<singleorder>
+                <auth ukey="321ewq" checksum="123qwe"/>
+                <mode>new_post</mode>
+                <order okey="qwe123" inner_id="123" name="Кл" b_date="2009-12-14" sms="8905" post_type="0">
+                    <address index="321123" region="Камчатский край" area="Москва" p_address="ул. Блабла, д.3, кв.20" />
+                    <contacts>тел. 8905</contacts>
+                    <services  valuation="yes" fragile="no" cod="no"  />
+                    <items>
+                        <item name="товар 1" weight="2.000" quantity="3" price="340.55"/>
+                        <item name="товар 2" weight="3.000" quantity="5" price="555.55"/>
+                    </items>
+                </order>
+            </singleorder>',
+            $xml->SingleOrderPostRequest($delivery)
         );
     }
 
-    function testSingleOrderCarryStatus_DPD()
+    function testSingleOrderPostRequest_OneArray()
     {
-        $status = new SingleOrderCarryStatusRequest();
+        $delivery = new SingleOrderDeliveryRequest();
+        $auth = new Auth();
         $xml = new MakeXml();
-        $status->setMode('get_dpd_pickup')->setAuth('321ewq');
+        $order = [
+            'post' => [
+                'innerId' => '123',
+                'okey' => 'qwe123',
+                'name' => 'Кл',
+                'beginDate' => '2009-12-14',
+                'sms' => '8905',
+                'postType' => 0,
+                'orderContent' => [
+                    'contacts' => 'тел. 8905',
+                    'services' => [
+                        'valuation' => true,
+                        'fragile' => false,
+                        'cod' => true,
+                        'big' => true,
+                        'class1' => true,
+                        'postTarif' => false,
+                        'notAvia' => true,
+                        'optimize' => false,
+                        'smsInform' => true,
+                        'insurance' => false
+                    ],
+                    'address' => [
+                        'index' => '321123',
+                        'region' => 'Камчатский край',
+                        'area' => 'Москва',
+                        'poluchAddress' => 'ул. Блабла, д.3, кв.20'
+                    ],
+                    'items' => [
+                        [
+                            'name' => 'товар 1',
+                            'weight' => 2.000,
+                            'quantity' => 3,
+                            'price' => 340.55
+                        ],
+                        [
+                            'name' => 'товар 2',
+                            'weight' => 3.000,
+                            'quantity' => 5,
+                            'price' => 555.55
+                        ]
+                    ]
+                ]
+            ]
+        ];
 
+        $auth->setCheckSum('123qwe')->setUkey('321ewq');
+        $delivery->setMode('new_post')->setAuth($auth)->setOrder($order);
         $this->assertXmlStringEqualsXmlString(
-            XML_HEADER . '<singleorder><mode>get_dpd_pickup</mode><auth ukey="321ewq"/></singleorder>',
-            $xml->SingleOrderCarryStatusRequest($status)
+            XML_HEADER .
+            '<singleorder>
+                <auth ukey="321ewq" checksum="123qwe"/>
+                <mode>new_post</mode>
+                <order okey="qwe123" inner_id="123" name="Кл" b_date="2009-12-14" sms="8905" post_type="0">
+                    <address index="321123" region="Камчатский край" area="Москва" p_address="ул. Блабла, д.3, кв.20" />
+                    <contacts>тел. 8905</contacts>
+                    <services valuation="yes" fragile="no" cod="yes" big="yes" class1="yes" post_tarif="no" not_avia="yes" oprimize="no" sms_inform="yes" insurance="no" />
+                    <items>
+                        <item name="товар 1" weight="2.000" quantity="3" price="340.55"/>
+                        <item name="товар 2" weight="3.000" quantity="5" price="555.55"/>
+                    </items>
+                </order>
+            </singleorder>',
+            $xml->SingleOrderPostRequest($delivery)
         );
     }
 
+    function testSingleOrderDpdRequest()
+    {
+        $delivery = new SingleOrderDeliveryRequest();
+        $auth = new Auth();
+        $xml = new MakeXml();
+        $services = [
+            'valuation' => true,
+            'fragile' => false,
+            'waiting' => true,
+            'cod' => false
+        ];
+        $items = [
+            [
+                'name' => 'товар 1',
+                'weight' => 2.000,
+                'quantity' => 3,
+                'price' => 340.55
+            ],
+            [
+                'name' => 'товар 2',
+                'weight' => 3.000,
+                'quantity' => 5,
+                'price' => 555.55
+            ]
+        ];
+        $address = [
+            'index' => '321123',
+            'region' => 'Камчатский край',
+            'area' => 'Москва',
+            'street' => 'Литейная',
+            'house' => '12а',
+            'carrymode' => '10А'
+        ];
+        $orderContent = [
+            'contacts' => 'тел. 8905',
+            'services' => $services,
+            'address' => $address,
+            'items' => $items
+        ];
+        $order = [
+            'post' => [
+                'innerId' => '123',
+                'okey' => 'qwe123',
+                'name' => 'Кл',
+                'endTime' => '12:00',
+                'beginTime' => '11:00',
+                'beginDate' => '2009-12-14',
+                'postType' => 0,
+                'orderContent' => $orderContent
+            ]
+        ];
+        $auth->setCheckSum('123qwe')->setUkey('321ewq');
+        $delivery->setMode('new_dpd')->setAuth($auth)->setOrder($order);
+        $this->assertXmlStringEqualsXmlString(
+            XML_HEADER .
+            '<singleorder>
+                <auth ukey="321ewq" checksum="123qwe"/>
+                <mode>new_dpd</mode>
+                <order okey="qwe123" inner_id="123" name="Кл" b_date="2009-12-14" e_time="12:00" b_time="11:00" post_type="0">
+                    <address index="321123" region="Камчатский край" area="Москва" street="Литейная" house="12а" carrymode="10А" />
+                    <contacts>тел. 8905</contacts>
+                    <services  valuation="yes" fragile="no" cod="no" waiting="yes" />
+                    <items>
+                        <item name="товар 1" weight="2.000" quantity="3" price="340.55"/>
+                        <item name="товар 2" weight="3.000" quantity="5" price="555.55"/>
+                    </items>
+                </order>
+            </singleorder>',
+            $xml->SingleOrderDpdRequest($delivery)
+        );
+    }
 
+    function testSingleOrderCarryRequest_withNoNeedData()
+    {
+        $delivery = new SingleOrderDeliveryRequest();
+        $auth = new Auth();
+        $xml = new MakeXml();
+        $delivset = [
+            'returnPrice' => 20,
+            'abovePrice' => 50,
+            'belows' => [
+                [
+                    'belowSum' => 100,
+                    'price' => 250
+                ],
+                [
+                    'belowSum' => 500,
+                    'price' => 150.5
+                ]
+            ]
+        ];
+        $services = [
+            'cash' => true,
+            'cheque' => false,
+            'big' => true
+        ];
+        $items = [
+            [
+                'name' => 'товар 1',
+                'weight' => 2.000,
+                'quantity' => 3,
+                'price' => 340.55,
+                'expmode' => 1
+            ],
+            [
+                'name' => 'товар 2',
+                'weight' => 3.000,
+                'quantity' => 5,
+                'price' => 555.55
+            ]
+        ];
+        $orderContent = [
+            'contacts' => 'тел. 8905',
+            'description' => 'сзади',
+            'services' => $services,
+            'items' => $items,
+            'delivset' => $delivset
+        ];
+        $order = [
+            'carry' => [
+                'okey' => '321qwe',
+                'innerId' => '123',
+                'name' => 'Кл',
+                'address' => 'Москва...',
+                'fromMkad' => '0',
+                'dayDate' => '2009-12-14',
+                'beginDate' => '2009-11-12',
+                'endDate' => '2009-11-15',
+                'places' => '1',
+                'sms' => '8905',
+                'orderContent' => $orderContent
+            ]
+        ];
+        $auth->setCheckSum('123qwe')->setUkey('321ewq');
+        $delivery->setMode('new')->setAuth($auth)->setOrder($order);
+        $this->assertXmlStringEqualsXmlString(
+            XML_HEADER .
+            '<singleorder>
+                <auth ukey="321ewq" checksum="123qwe"/>
+                <mode>new</mode>
+                <order okey="321qwe" inner_id="123" name="Кл" b_date="2009-11-12" e_date="2009-11-15" places="1" sms="8905">
+                    <contacts>тел. 8905</contacts>
+                    <description>сзади</description>
+                    <services cash="yes" cheque="no" big="yes"/>
+                    <items>
+                        <item name="товар 1" weight="2.000" quantity="3" price="340.55" expmode="1"/>
+                        <item name="товар 2" weight="3.000" quantity="5" price="555.55"/>
+                    </items>
+                    <delivset return_price="20.000" above_price="50.000">
+                        <below below_sum="100.000" price="250.000" />
+                        <below below_sum="500.000" price="150.500" />
+                    </delivset>
+                </order>
+            </singleorder>',
+            $xml->SingleOrderCarryRequest($delivery)
+        );
+    }
 }
