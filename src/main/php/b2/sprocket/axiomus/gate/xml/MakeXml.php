@@ -2,48 +2,93 @@
 
 namespace b2\sprocket\axiomous\gate\xml;
 
+define("LOCAL_PATH", __DIR__ . DIRECTORY_SEPARATOR);
+
 class MakeXml
 {
-    function SingleOrderStatusRequest($status)
+
+    function singleOrderStatusRequest($status)
     {
-        $file = __DIR__ . DIRECTORY_SEPARATOR . 'status.tpl.xml';
+        $file = LOCAL_PATH . 'statusRequest.tpl.xml';
         return $this->getXml($status, $file);
     }
 
-    function SingleOrderStatusListRequest($status)
+    function singleOrderStatusListRequest($status)
     {
-        $file = __DIR__ . DIRECTORY_SEPARATOR . 'statuslist.tpl.xml';
+        $file = LOCAL_PATH. 'statuslistRequest.tpl.xml';
         return $this->getXml($status, $file);
     }
 
-    function SingleOrderDeliveryRequest($delivery)
+    function singleOrderDeliveryRequest($delivery)
     {
-        $file = __DIR__ . DIRECTORY_SEPARATOR . 'deliveryOrder.tpl.xml';
+        $file = LOCAL_PATH . 'deliveryRequest.tpl.xml';
         return $this->getXml($delivery, $file);
     }
 
-    function SingleOrderCarryRequest($delivery)
+    function singleOrderCarryRequest($delivery)
     {
-        $file = __DIR__ . DIRECTORY_SEPARATOR . 'carryRequest.tpl.xml';
+        $file = LOCAL_PATH. 'carryRequest.tpl.xml';
         return $this->getXml($delivery, $file);
     }
 
-    function SingleOrderPostRequest($delivery)
+    function singleOrderPostRequest($delivery)
     {
-        $file = __DIR__ . DIRECTORY_SEPARATOR . 'postRequest.tpl.xml';
+        $file = LOCAL_PATH . 'postRequest.tpl.xml';
         return $this->getXml($delivery, $file);
     }
 
-    function SingleOrderDpdRequest($delivery)
+    function singleOrderDpdRequest($delivery)
     {
-        $file = __DIR__ . DIRECTORY_SEPARATOR . 'dpdRequest.tpl.xml';
+        $file = LOCAL_PATH . 'dpdRequest.tpl.xml';
         return $this->getXml($delivery, $file);
     }
 
-    function SingleOrderCarryStatusRequest($status)
+    function singleOrderCarryStatusRequest($status)
     {
-        $file = __DIR__ . DIRECTORY_SEPARATOR . 'carryStatusOrder.tpl.xml';
+        $file = LOCAL_PATH . 'carryStatusRequest.tpl.xml';
         return $this->getXml($status, $file);
+    }
+
+    function singleOrderNewExportRequest($export)
+    {
+        $file = LOCAL_PATH . 'exportRequest.tpl.xml';
+        return $this->getXml($export, $file);
+    }
+
+    function singleOrderSelfExportRequest($selfExport)
+    {
+        $file = LOCAL_PATH . 'selfExportRequest.tpl.xml';
+        return $this->getXml($selfExport, $file);
+    }
+
+    function singleOrderGetGeographyRequest($geography)
+    {
+        $file = LOCAL_PATH . 'getGeographyRequest.tpl.xml';
+        return $this->getXml($geography, $file);
+    }
+
+    function singleOrderRegionCourierRequest($courier)
+    {
+        $file = LOCAL_PATH . 'regionCourierRequest.tpl.xml';
+        return $this->getXml($courier, $file);
+    }
+
+    function singleOrderRegionPickupRequest($pickup)
+    {
+        $file = LOCAL_PATH . 'regionPickupRequest.tpl.xml';
+        return $this->getXml($pickup, $file);
+    }
+
+    function singleOrderBoxberryPickupRequest($pickup)
+    {
+        $file = LOCAL_PATH . 'boxberryPickupRequest.tpl.xml';
+        return $this->getXml($pickup, $file);
+    }
+
+    function singleOrderDeleteRequest($delete)
+    {
+        $file = LOCAL_PATH . 'deleteRequest.tpl.xml';
+        return $this->getXml($delete, $file);
     }
 
     private function getXml($obj, $string)

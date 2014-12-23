@@ -1,6 +1,6 @@
 <singleorder xmlns:a="b2tplxml">
+    <mode a:bind="$mode" a:text="@orderType" type="?@modeType"/>
     <auth a:bind="$auth" ukey="@ukey" checksum="@checksum"/>
-    <mode a:bind="$mode" a:text="@orderType"/>
     <order okey="?@okey" inner_id="?@innerId" name="@name" b_date="@beginDate" e_time="@endTime" b_time="@beginTime" incl_deliv_sum="?@inclDelivSum" post_type="@postType" email="?@email"
            a:bind="$order">
         <address a:bind="@orderContent.address" index="@index" region="@region" area="@area" street="@street" house="@house" carrymode="?@carrymode"/>
@@ -9,6 +9,5 @@
         <items a:output="@orderContent.items">
             <item a:bindlist="@orderContent.items" name="@name" weight="@weight" quantity="@quantity" price="@price" orderId="?@orderId"/>
         </items>
-        <item a:bind="@orderContent.item" a:output="@orderContent.item" name="@name" weight="@weight" quantity="@quantity" price="@price"/>
     </order>
 </singleorder>
