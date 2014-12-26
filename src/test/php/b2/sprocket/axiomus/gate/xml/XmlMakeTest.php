@@ -23,7 +23,7 @@ define('B2_FOUNDATION_TEMPLATES','C:\Work\Axiomus\foundation\src\main\php\b2\tem
 define('B2_AXIOMUS_TEMPLATES','C:\Work\Axiomus\sprocket-axiomus\src\main\php\b2\sprocket\axiomus');
 define('XML_HEADER', '<?xml version="1.0" encoding="UTF-8"?>');
 
-require_once B2_AXIOMUS_TEMPLATES .'\gate\xml\MakeXml.php';
+require_once B2_AXIOMUS_TEMPLATES . '\gate\xml\XmlMake.php';
 require_once B2_AXIOMUS_TEMPLATES . '\api\Auth.php';
 require_once B2_AXIOMUS_TEMPLATES . '\api\Mode.php';
 require_once B2_AXIOMUS_TEMPLATES . '\api\Order.php';
@@ -48,80 +48,92 @@ require_once B2_FOUNDATION_TEMPLATES . '\..\util\String.php';
 require_once B2_FOUNDATION_TEMPLATES . '\XmlTemplate.php';
 require_once B2_FOUNDATION_TEMPLATES . '\XmlTemplateOptions.php';
 
+
 require_once __DIR__ . '\..\..\..\test.boot.php';
 
+/*
+$GLOBALS['b2foundation'] = 'C:\Work\Axiomus\foundation\src\main\php';
+require_once 'C:\Work\Axiomus\foundation\src\main\php\b2\sys\classloading.php';
+b2classpath('C:\Work\Axiomus\sprocket-axiomus\src\main\php\\');
+*/
 //require_once 'C:\Work\Axiomus\sprocket-axiomus\src\test\php\b2\sprocket\test.boot.php';
 
-class MakeXmlTest extends \PHPUnit_Framework_TestCase {
+class XmlMakeTest extends \PHPUnit_Framework_TestCase {
+
+    private $xml;
+
+    protected function setUp()
+    {
+        $this->xml = new MakeXml();
+    }
 
     function testSingleOrderStatusRequest_objects()
     {
         $status = new SingleOrderRequest();
-        $xml = new MakeXml();
 
         $status->setMode('status')->setOkey('23fs2fsd3');
 
         $this->assertXmlStringEqualsXmlString(
             XML_HEADER . '<singleorder><mode>status</mode><okey>23fs2fsd3</okey></singleorder>',
-            $xml->singleOrderStatusRequest($status)
+            $this->xml->singleOrderStatusRequest($status)
         );
     }
 
     function testSingleOrderGeographyRequest()
     {
-        $xml = new MakeXml();
+
         $geography = new SingleOrderRequest();
         $geography->setAuth('123asd')->setMode('get_dpd_pickup');
 
         $this->assertXmlStringEqualsXmlString(
             XML_HEADER . '<singleorder><mode>get_dpd_pickup</mode><auth ukey="123asd"/></singleorder>',
-            $xml->singleOrderGetGeographyRequest($geography)
+            $this->xml->singleOrderGetGeographyRequest($geography)
         );
     }
 
     function testSingleOrderCarryStatus_MskStP()
     {
         $status = new SingleOrderRequest();
-        $xml = new MakeXml();
+
         $status->setMode('get_carry')->setAuth('123qwe');
 
         $this->assertXmlStringEqualsXmlString(
             XML_HEADER . '<singleorder><mode>get_carry</mode><auth ukey="123qwe"/></singleorder>',
-            $xml->singleOrderCarryStatusRequest($status)
+            $this->xml->singleOrderCarryStatusRequest($status)
         );
     }
 
     function testSingleOrderCarryStatus_DPD()
     {
         $status = new SingleOrderRequest();
-        $xml = new MakeXml();
+
         $status->setMode('get_dpd_pickup')->setAuth('321ewq');
 
         $this->assertXmlStringEqualsXmlString(
             XML_HEADER . '<singleorder><mode>get_dpd_pickup</mode><auth ukey="321ewq"/></singleorder>',
-            $xml->singleOrderCarryStatusRequest($status)
+            $this->xml->singleOrderCarryStatusRequest($status)
         );
     }
 
     function testSingleOrderStatusRequest_Arrays()
     {
         $status = new SingleOrderRequest();
-        $xml = new MakeXml();
+
         $this->assertXmlStringEqualsXmlString(
             XML_HEADER . '<singleorder><mode>status</mode><okey>23fs2fsd3</okey></singleorder>',
-            $xml->singleOrderStatusRequest(array('okey'=>'23fs2fsd3', 'mode'=>array('orderType'=>'status')))
+            $this->xml->singleOrderStatusRequest(array('okey'=>'23fs2fsd3', 'mode'=>array('orderType'=>'status')))
         );
     }
 
     function testSingleOrderStatusListRequest()
     {
         $statusList = new SingleOrderRequest();
-        $xml = new MakeXml();
+
 
         $statusList->setMode('status')->setOkeylist([1,2,3]);
         $this->assertXmlStringEqualsXmlString(
             XML_HEADER . '<singleorder><mode>status</mode><okeylist><okey>1</okey><okey>2</okey><okey>3</okey></okeylist></singleorder>',
-            $xml->singleOrderStatusListRequest($statusList)
+            $this->xml->singleOrderStatusListRequest($statusList)
         );
     }
 
@@ -129,7 +141,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
     {
         $delivery = new SingleOrderRequest();
         $auth = new Auth();
-        $xml = new MakeXml();
+
         $delivset = [
             'returnPrice' => 20.00,
             'abovePrice' => 50.00,
@@ -202,7 +214,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
                     </delivset>
                 </order>
             </singleorder>',
-            $xml->singleOrderDeliveryRequest($delivery)
+            $this->xml->singleOrderDeliveryRequest($delivery)
         );
     }
 
@@ -236,7 +248,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
         $delivery = new SingleOrderRequest();
         $delivery->setAuth($auth)->setMode($mode)->setOrder($order);
 
-        $xml = new MakeXml();
+
 
         $this->assertXmlStringEqualsXmlString(
             XML_HEADER .
@@ -255,7 +267,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
                     </delivset>
                 </order>
             </singleorder>',
-            $xml->singleOrderDeliveryRequest($delivery)
+            $this->xml->singleOrderDeliveryRequest($delivery)
         );
     }
 
@@ -263,7 +275,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
     {
         $delivery = new SingleOrderRequest();
         $auth = new Auth();
-        $xml = new MakeXml();
+
         $services = ['cash' => true, 'cheque' => false];
         $items = [
             [
@@ -317,7 +329,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
                     </items>
                 </order>
             </singleorder>',
-            $xml->singleOrderDeliveryRequest($delivery)
+            $this->xml->singleOrderDeliveryRequest($delivery)
         );
     }
 
@@ -325,7 +337,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
     {
         $delivery = new SingleOrderRequest();
         $auth = new Auth();
-        $xml = new MakeXml();
+
         $items = [[
             'name' => 'товар 1',
             'weight' => 2.000,
@@ -362,7 +374,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
                     </items>
                 </order>
             </singleorder>',
-            $xml->singleOrderDeliveryRequest($delivery)
+            $this->xml->singleOrderDeliveryRequest($delivery)
         );
     }
 
@@ -370,7 +382,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
     {
         $delivery = new SingleOrderRequest();
         $auth = new Auth();
-        $xml = new MakeXml();
+
         $items = [[
             'name' => 'товар 1',
             'weight' => 2.000,
@@ -425,7 +437,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
                     </discountset>
                 </order>
             </singleorder>',
-            $xml->singleOrderDeliveryRequest($delivery)
+            $this->xml->singleOrderDeliveryRequest($delivery)
         );
     }
 
@@ -433,7 +445,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
     {
         $delivery = new SingleOrderRequest();
         $auth = new Auth();
-        $xml = new MakeXml();
+
         $services = [
             'valuation' => true,
             'fragile' => false,
@@ -493,7 +505,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
                     </items>
                 </order>
             </singleorder>',
-            $xml->singleOrderPostRequest($delivery)
+            $this->xml->singleOrderPostRequest($delivery)
         );
     }
 
@@ -501,7 +513,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
     {
         $delivery = new SingleOrderRequest();
         $auth = new Auth();
-        $xml = new MakeXml();
+
         $order = [
             'post' => [
                 'innerId' => '123',
@@ -565,7 +577,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
                     </items>
                 </order>
             </singleorder>',
-            $xml->singleOrderPostRequest($delivery)
+            $this->xml->singleOrderPostRequest($delivery)
         );
     }
 
@@ -573,7 +585,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
     {
         $delivery = new SingleOrderRequest();
         $auth = new Auth();
-        $xml = new MakeXml();
+
         $services = [
             'valuation' => true,
             'fragile' => false,
@@ -637,7 +649,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
                     </items>
                 </order>
             </singleorder>',
-            $xml->singleOrderDpdRequest($delivery)
+            $this->xml->singleOrderDpdRequest($delivery)
         );
     }
 
@@ -645,7 +657,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
     {
         $delivery = new SingleOrderRequest();
         $auth = new Auth();
-        $xml = new MakeXml();
+
         $delivset = [
             'returnPrice' => 20,
             'abovePrice' => 50,
@@ -723,7 +735,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
                     </delivset>
                 </order>
             </singleorder>',
-            $xml->singleOrderCarryRequest($delivery)
+            $this->xml->singleOrderCarryRequest($delivery)
         );
     }
 
@@ -735,7 +747,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
         $mode = new Mode();
         $mode->setOrderType('new_export');
 
-        $xml = new MakeXml();
+
 
         $item = new OrderItem();
         $item->setName('крем')->setWeight(0.4)->setQuantity(2)->setPrice(123.55);
@@ -766,7 +778,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
                     </items>
                 </order>
             </singleorder>',
-            $xml->singleOrderNewExportRequest($newCarry)
+            $this->xml->singleOrderNewExportRequest($newCarry)
         );
     }
 
@@ -778,7 +790,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
      * */
     function testSingleOrderSelfExportRequest()
     {
-        $xml = new MakeXml();
+
         $selfExport = new SingleOrderRequest();
 
         $item = new OrderItem();
@@ -806,13 +818,13 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
                     </items>
                 </order>
             </singleorder>',
-            $xml->singleOrderSelfExportRequest($selfExport)
+            $this->xml->singleOrderSelfExportRequest($selfExport)
         );
     }
 
     function testSingleOrderRegionCourierRequest()
     {
-        $xml = new MakeXml();
+
         $regionCourier = new SingleOrderRequest();
 
         $item = new OrderItem();
@@ -848,13 +860,13 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
                     </items>
                 </order>
             </singleorder>',
-            $xml->singleOrderRegionCourierRequest($regionCourier)
+            $this->xml->singleOrderRegionCourierRequest($regionCourier)
         );
     }
 
     function testSingleOrderRegionPickupRequest()
     {
-        $xml = new MakeXml();
+
         $regionPickup = new SingleOrderRequest();
 
         $item = new OrderItem();
@@ -890,13 +902,13 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
                     </items>
                 </order>
             </singleorder>',
-            $xml->singleOrderRegionPickupRequest($regionPickup)
+            $this->xml->singleOrderRegionPickupRequest($regionPickup)
         );
     }
 
     function testSingleOrderBoxberryPickupRequest()
     {
-        $xml = new MakeXml();
+
         $boxberryPickup = new SingleOrderRequest();
 
         $item = new OrderItem();
@@ -932,7 +944,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
                     </items>
                 </order>
             </singleorder>',
-            $xml->singleOrderBoxberryPickupRequest($boxberryPickup)
+            $this->xml->singleOrderBoxberryPickupRequest($boxberryPickup)
         );
     }
 
@@ -940,7 +952,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
     {
         $delivery = new SingleOrderRequest();
         $auth = new Auth();
-        $xml = new MakeXml();
+
         $services = [
             'valuation' => true,
             'fragile' => false,
@@ -1007,15 +1019,13 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
                     </items>
                 </order>
             </singleorder>',
-            $xml->singleOrderDpdRequest($delivery)
+            $this->xml->singleOrderDpdRequest($delivery)
         );
     }
 
     function testSingleOrderDeleteRequest()
     {
-        $xml = new MakeXml();
         $delete = new SingleOrderRequest();
-
         $delete->setMode('delete')->setAuth('123qwe')->setOkey('some123key');
 
         $this->assertXmlStringEqualsXmlString(
@@ -1025,7 +1035,7 @@ class MakeXmlTest extends \PHPUnit_Framework_TestCase {
                 <auth ukey="123qwe"/>
                 <okey>some123key</okey>
             </singleorder>',
-            $xml->singleOrderDeleteRequest($delete)
+            $this->xml->singleOrderDeleteRequest($delete)
         );
     }
 }
