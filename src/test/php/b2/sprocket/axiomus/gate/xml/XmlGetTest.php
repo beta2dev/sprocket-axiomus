@@ -2,6 +2,7 @@
 
 namespace b2\sprocket\axiomus\gate\xml;
 
+use b2\sprocket\axiomus\adapter\ArraysResponse;
 use b2\sprocket\axiomus\adapter\Auth;
 use b2\sprocket\axiomus\adapter\CarryList;
 use b2\sprocket\axiomus\adapter\DayDate;
@@ -9,6 +10,7 @@ use b2\sprocket\axiomus\adapter\Item;
 use b2\sprocket\axiomus\adapter\ItemsRefused;
 use b2\sprocket\axiomus\adapter\ListResponse;
 use b2\sprocket\axiomus\adapter\Office;
+use b2\sprocket\axiomus\adapter\Okey;
 use b2\sprocket\axiomus\adapter\Order;
 use b2\sprocket\axiomus\adapter\PostStatus;
 use b2\sprocket\axiomus\adapter\Request;
@@ -42,7 +44,7 @@ class XmlGetTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(print_r($expected, true), print_r($obj, true));
     }
 
-    function testListStatusResponse()
+    function testStatusResponse()
     {
         $xml = '<response>
                     <request>status</request>
@@ -63,7 +65,7 @@ class XmlGetTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(print_r($expected, true), print_r($obj, true));
     }
 
-    function testRefusedListStatusResponse()
+    function testRefusedStatusResponse()
     {
         $xml = '<response>
                     <request>status</request>
@@ -84,7 +86,7 @@ class XmlGetTest extends \PHPUnit_Framework_TestCase {
             (new Order())->setId(1013)->setInnerId(167)->setPrice(123.23)->setCustomerPrice(132.00)->setInclDelivSum(430.12)->setGroup(321)->setExportOrder(4321)->setFid(654),
             (new Status())->setCode(211)->setStatus('ras'),
             (new DayDate())->setDayDate('2011-13-15'),
-            (new ItemsRefused())->setItems([
+            (new ArraysResponse())->setItemsRefused([
                 (new Item())->setName('some')->setQuantity(2)->setPrice(123.23),
                 (new Item())->setName('some2')->setQuantity(2)->setPrice(123.23),
             ]),
@@ -92,7 +94,7 @@ class XmlGetTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(print_r($expected, true), print_r($obj, true));
     }
 
-    function testDpdListStatusResponse()
+    function testDpdStatusResponse()
     {
         $xml = '<response>
                     <request>status</request>
@@ -111,6 +113,29 @@ class XmlGetTest extends \PHPUnit_Framework_TestCase {
             (new Status())->setCode(211)->setStatus('ras'),
             (new DayDate())->setDayDate('2011-13-15'),
             (new PostStatus())->setPostprice(421.12)->setTracking(123)
+        ]);
+        $this->assertEquals(print_r($expected, true), print_r($obj, true));
+    }
+
+    function testListStatusResponse()
+    {
+        $xml = '<response>
+                    <request>status_list</request>
+                    <okeylist>
+                        <okey id="123" status_code="100" status_name="ok" inner_id="Zak #123" price="123.45" customer_price="54.321">asd123</okey>
+                        <okey id="123" status_code="105" status_name="ok" inner_id="Zak #123" price="123.45" customer_price="54.321">asd123</okey>
+                    </okeylist>
+                </response>
+                ';
+        $obj = $this->mapper->map($xml);
+
+        $expected = new Response();
+        $expected->setItems([
+            (new Request())->setRequest('status_list'),
+            (new ArraysResponse())->setOkeylist([
+                (new Okey())->setId(123)->setStatusCode(100)->setStatusName('ok')->setInnerId('Zak #123')->setPrice(123.45)->setCustomerPrice(54.321)->setOkey('asd123'),
+                (new Okey())->setId(123)->setStatusCode(105)->setStatusName('ok')->setInnerId('Zak #123')->setPrice(123.45)->setCustomerPrice(54.321)->setOkey('asd123'),
+            ]),
         ]);
         $this->assertEquals(print_r($expected, true), print_r($obj, true));
     }

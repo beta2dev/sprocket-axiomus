@@ -4,11 +4,9 @@
 namespace b2\sprocket\axiomus\adapter;
 
 
-class Order {
-    private $id;
-    private $innerId;
+class Order extends ApplicationInfo{
+
     private $price;
-    private $customerPrice;
     private $inclDelivSum;
     private $exportOrder;
     private $fid;
@@ -50,28 +48,6 @@ class Order {
         return $this;
     }
 
-    function getId()
-    {
-        return $this->id;
-    }
-
-    function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    function getInnerId()
-    {
-        return $this->innerId;
-    }
-
-    function setInnerId($innerId)
-    {
-        $this->innerId = $innerId;
-        return $this;
-    }
-
     function getPrice()
     {
         return $this->price;
@@ -80,17 +56,6 @@ class Order {
     function setPrice($price)
     {
         $this->price = $price;
-        return $this;
-    }
-
-    function getCustomerPrice()
-    {
-        return $this->customerPrice;
-    }
-
-    function setCustomerPrice($customerPrice)
-    {
-        $this->customerPrice = $customerPrice;
         return $this;
     }
 
