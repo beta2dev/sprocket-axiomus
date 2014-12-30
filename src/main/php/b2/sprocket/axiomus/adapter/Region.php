@@ -1,12 +1,12 @@
 <?php
 
 
-namespace b2\sprocket\axiomous\adapter;
+namespace b2\sprocket\axiomus\adapter;
 
 
 class Region {
     private $regionCode;
-    private $regionName;
+    private $name;
 
     function getRegionCode()
     {
@@ -19,14 +19,14 @@ class Region {
         return $this;
     }
 
-    function getRegionName()
+    function getName()
     {
-        return $this->regionName;
+        return $this->name;
     }
 
-    function setRegionName($regionName)
+    function setName($regionName)
     {
-        $this->regionName = $regionName;
+        $this->name = $regionName;
         return $this;
     }
 

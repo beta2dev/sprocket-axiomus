@@ -1,8 +1,8 @@
 <?php
 
-namespace b2\sprocket\axiomous\api;
+namespace b2\sprocket\axiomus\api;
 
-use b2\sprocket\axiomous\api\DiscountBelow;
+use b2\sprocket\axiomus\api\DiscountBelow;
 
 class OrderDiscountset
 {

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace b2\sprocket\axiomous\adapter;
+namespace b2\sprocket\axiomus\adapter;
 
 
 class Pack {

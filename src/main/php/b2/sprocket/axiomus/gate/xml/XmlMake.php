@@ -1,6 +1,6 @@
 <?php
 
-namespace b2\sprocket\axiomous\gate\xml;
+namespace b2\sprocket\axiomus\gate\xml;
 
 define("LOCAL_PATH", __DIR__ . DIRECTORY_SEPARATOR);
 

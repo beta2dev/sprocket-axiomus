@@ -1,8 +1,8 @@
 <?php
 
-namespace b2\sprocket\axiomous\api;
+namespace b2\sprocket\axiomus\api;
 
-use b2\sprocket\axiomous\api\OrderContent;
+use b2\sprocket\axiomus\api\OrderContent;
 
 class Order
 {

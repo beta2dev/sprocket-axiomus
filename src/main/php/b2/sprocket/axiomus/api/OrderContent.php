@@ -1,14 +1,14 @@
 <?php
 
-namespace b2\sprocket\axiomous\api;
+namespace b2\sprocket\axiomus\api;
 
-use b2\sprocket\axiomous\api\OrderAddress;
-use b2\sprocket\axiomous\api\OrderDelivset;
-use b2\sprocket\axiomous\api\OrderDiscountset;
-use b2\sprocket\axiomous\api\ExportServices;
-use b2\sprocket\axiomous\api\OrderServices;
-use b2\sprocket\axiomous\api\PostServices;
-use b2\sprocket\axiomous\api\OrderItem;
+use b2\sprocket\axiomus\api\OrderAddress;
+use b2\sprocket\axiomus\api\OrderDelivset;
+use b2\sprocket\axiomus\api\OrderDiscountset;
+use b2\sprocket\axiomus\api\ExportServices;
+use b2\sprocket\axiomus\api\OrderServices;
+use b2\sprocket\axiomus\api\PostServices;
+use b2\sprocket\axiomus\api\OrderItem;
 
 class OrderContent
 {

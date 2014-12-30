@@ -1,62 +1,30 @@
 <?php
 
-namespace b2\sprocket\axiomous\gate\xml;
+namespace b2\sprocket\axiomus\gate\xml;
 
-use b2\sprocket\axiomous\api\Auth;
-use b2\sprocket\axiomous\api\Mode;
-use b2\sprocket\axiomous\api\CarryOrder;
-use b2\sprocket\axiomous\api\OrderAddress;
-use b2\sprocket\axiomous\api\DelivsetBelow;
-use b2\sprocket\axiomous\api\OrderDelivset;
-use \b2\sprocket\axiomous\api\SingleOrderRequest;
-use b2\sprocket\axiomous\api\OrderContent;
-use b2\sprocket\axiomous\api\BoxberryServices;
-use b2\sprocket\axiomous\api\ExportServices;
-use b2\sprocket\axiomous\api\OrderServices;
-use b2\sprocket\axiomous\api\RegionServices;
-use b2\sprocket\axiomous\api\ExportOrder;
-use b2\sprocket\axiomous\api\OrderItem;
-use b2\sprocket\axiomous\api\Order;
-use b2\sprocket\axiomous\api\SelfExportOrder;
+use b2\sprocket\axiomus\api\Auth;
+use b2\sprocket\axiomus\api\Mode;
+use b2\sprocket\axiomus\api\OrderAddress;
+use b2\sprocket\axiomus\api\DelivsetBelow;
+use b2\sprocket\axiomus\api\OrderDelivset;
+use \b2\sprocket\axiomus\api\SingleOrderRequest;
+use b2\sprocket\axiomus\api\OrderContent;
+use b2\sprocket\axiomus\api\BoxberryServices;
+use b2\sprocket\axiomus\api\ExportServices;
+use b2\sprocket\axiomus\api\OrderServices;
+use b2\sprocket\axiomus\api\RegionServices;
+use b2\sprocket\axiomus\api\ExportOrder;
+use b2\sprocket\axiomus\api\OrderItem;
+use b2\sprocket\axiomus\api\Order;
+use b2\sprocket\axiomus\api\SelfExportOrder;
 
 define('B2_FOUNDATION_TEMPLATES','C:\Work\Axiomus\foundation\src\main\php\b2\templates');
 define('B2_AXIOMUS_TEMPLATES','C:\Work\Axiomus\sprocket-axiomus\src\main\php\b2\sprocket\axiomus');
 define('XML_HEADER', '<?xml version="1.0" encoding="UTF-8"?>');
 
 require_once B2_AXIOMUS_TEMPLATES . '\gate\xml\XmlMake.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\Auth.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\Mode.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\Order.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\ExportOrder.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\SelfExportOrder.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\OrderPost.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\CarryOrder.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\OrderContent.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\DelivsetBelow.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\OrderAddress.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\OrderDelivset.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\DiscountBelow.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\OrderDiscountset.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\OrderServices.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\ExportServices.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\PostServices.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\RegionServices.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\BoxberryServices.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\OrderItem.php';
-require_once B2_AXIOMUS_TEMPLATES . '\api\SingleOrderRequest.php';
-require_once B2_FOUNDATION_TEMPLATES . '\..\util\String.php';
-require_once B2_FOUNDATION_TEMPLATES . '\XmlTemplate.php';
-require_once B2_FOUNDATION_TEMPLATES . '\XmlTemplateOptions.php';
-
-
 require_once __DIR__ . '\..\..\..\test.boot.php';
 
-/*
-$GLOBALS['b2foundation'] = 'C:\Work\Axiomus\foundation\src\main\php';
-require_once 'C:\Work\Axiomus\foundation\src\main\php\b2\sys\classloading.php';
-b2classpath('C:\Work\Axiomus\sprocket-axiomus\src\main\php\\');
-*/
-//require_once 'C:\Work\Axiomus\sprocket-axiomus\src\test\php\b2\sprocket\test.boot.php';
 
 class XmlMakeTest extends \PHPUnit_Framework_TestCase {
 

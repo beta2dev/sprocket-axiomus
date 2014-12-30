@@ -1,7 +1,7 @@
 <?php
 
 
-namespace b2\sprocket\axiomous\adapter;
+namespace b2\sprocket\axiomus\adapter;
 
 
 class Order {
@@ -11,10 +11,22 @@ class Order {
     private $customerPrice;
     private $inclDelivSum;
     private $exportOrder;
+    private $fid;
     private $returnOrder;
     private $group;
     private $statusCode;
     private $statusName;
+
+    function getFid()
+    {
+        return $this->fid;
+    }
+
+    function setFid($fid)
+    {
+        $this->fid = $fid;
+        return $this;
+    }
 
     function getStatusCode()
     {

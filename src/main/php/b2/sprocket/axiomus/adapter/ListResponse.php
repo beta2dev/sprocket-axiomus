@@ -1,10 +1,10 @@
 <?php
 
 
-namespace b2\sprocket\axiomous\adapter;
+namespace b2\sprocket\axiomus\adapter;
 
 
-class CarryList {
+class ListResponse {
     protected $offices;
 
     function getOffices()

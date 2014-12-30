@@ -4,8 +4,7 @@
 namespace b2\sprocket\axiomus\adapter;
 
 
-class Response {
-
+class ItemsRefused {
     private $items;
 
     function getItems()
