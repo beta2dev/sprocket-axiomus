@@ -15,9 +15,9 @@ class ArraysResponse {
     private $pickupList;
     private $carryList;
     private $okeylist;
-    private $courier;
     private $packs;
     private $itemsRefused;
+    private $courier;
 
     function getItemsRefused()
     {
@@ -71,17 +71,6 @@ class ArraysResponse {
     function setOkeylist($okeylist)
     {
         $this->okeylist = $okeylist;
-        return $this;
-    }
-
-    function getCourier()
-    {
-        return $this->courier;
-    }
-
-    function setCourier($courier)
-    {
-        $this->courier = $courier;
         return $this;
     }
 

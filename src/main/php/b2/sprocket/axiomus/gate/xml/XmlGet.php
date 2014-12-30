@@ -76,19 +76,35 @@ class XmlGet extends \b2\util\XmlMapper{
 
     function tag_office($mapper)
     {
-        $mapper->origin(self::CLASS_PATH . 'Office')->int('(@office_code) => officeCode')->string('@type')->string('(@office_name) => officeName')->string('(@office_address) => officeAddress')
-            ->int('(@city_code) => cityCode')->string('(@city_name) => cityName')->string('@GPS')->string('@WorkSchedule')->string('@Area')->string('@name')->string('@address')->string('@region')->int('@code')
-            ->string('@city');
+        $mapper->origin(self::CLASS_PATH . 'Office')
+            ->int('(@office_code) => officeCode')
+            ->string('@type')
+            ->string('(@office_name) => officeName')
+            ->string('(@office_address) => officeAddress')
+            ->int('(@city_code) => cityCode')
+            ->string('(@city_name) => cityName')
+            ->string('@GPS')
+            ->string('@WorkSchedule')
+            ->string('@Area')->string('@name')
+            ->string('@address')->string('@region')
+            ->int('@code')->string('@city')
+            ->string('text() => office');
     }
 
     function tag_region($mapper)
     {
-        $mapper->origin(self::CLASS_PATH. 'Region')->int('@region_code')->string('name');
+        $mapper->origin(self::CLASS_PATH. 'Region')->int('(@region_code) => regionCode')->string('name')
+            ->object('courier/city => courier[]')
+                ->up()
+            ->object('pickup/office => pickup[]');
     }
-
     function tag_okey($mapper)
     {
         $mapper->origin(self::CLASS_PATH . 'Okey')->applicationInfo()->int('(@status_code) => statusCode')->string('(@status_name) => statusName')->float('@price')->string('text() => okey');
     }
 
+    function tag_city()
+    {
+        $this->origin(self::CLASS_PATH . 'City')->int('(@city_code) => cityCode')->string('text() => city');
+    }
 }

@@ -18,6 +18,19 @@ class Office extends City
     protected $name;
     protected $address;
     protected $region;
+    protected $office;
+
+    function getOffice()
+    {
+        return $this->office;
+    }
+
+    function setOffice($office)
+    {
+        $this->office = $office;
+        return $this;
+    }
+
 
     function getOfficeCode()
     {

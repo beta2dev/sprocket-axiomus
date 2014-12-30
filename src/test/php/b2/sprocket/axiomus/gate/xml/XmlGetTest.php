@@ -5,6 +5,7 @@ namespace b2\sprocket\axiomus\gate\xml;
 use b2\sprocket\axiomus\adapter\ArraysResponse;
 use b2\sprocket\axiomus\adapter\Auth;
 use b2\sprocket\axiomus\adapter\CarryList;
+use b2\sprocket\axiomus\adapter\City;
 use b2\sprocket\axiomus\adapter\DayDate;
 use b2\sprocket\axiomus\adapter\Item;
 use b2\sprocket\axiomus\adapter\ItemsRefused;
@@ -13,6 +14,7 @@ use b2\sprocket\axiomus\adapter\Office;
 use b2\sprocket\axiomus\adapter\Okey;
 use b2\sprocket\axiomus\adapter\Order;
 use b2\sprocket\axiomus\adapter\PostStatus;
+use b2\sprocket\axiomus\adapter\Region;
 use b2\sprocket\axiomus\adapter\Request;
 use b2\sprocket\axiomus\adapter\Response;
 use b2\sprocket\axiomus\adapter\Status;
@@ -147,7 +149,7 @@ class XmlGetTest extends \PHPUnit_Framework_TestCase {
                         <office office_code="0" type="PVZ3" office_name="MSK" office_address="some_addr" city_code="0" city_name="some_name" GPS="123.123, 123.123" WorkSchedule="pn,vt,sr" Area="MSK"/>
                         <office office_code="0" type="PVZ" office_name="MSK" office_address="some_addr" city_code="0" city_name="some_name" GPS="123.123, 123.123" WorkSchedule="pn,vt,sr" Area="MSK"/>
                         <office office_code="0" type="PVZ4" office_name="MSK" office_address="some_addr" city_code="0" city_name="some_name" GPS="123.123, 123.123" WorkSchedule="pn,vt,sr" Area="MSK"/>
-                    </carry_list>>
+                    </carry_list>
                 </response>
                 ';
         $obj = $this->mapper->map($xml);
@@ -169,7 +171,7 @@ class XmlGetTest extends \PHPUnit_Framework_TestCase {
                     <pickup_list>
                         <office code="0" type="PVZ3" name="MSK" address="some_addr" city="Voronej" region="MSK"/>
                         <office code="0" type="PVZ2" name="MSK" address="some_addr" city="Voronej" region="MSK"/>
-                    </pickup_list>>
+                    </pickup_list>
                 </response>
                 ';
         $obj = $this->mapper->map($xml);
@@ -183,4 +185,53 @@ class XmlGetTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(print_r($expected, true), print_r($obj, true));
     }
 
+    function testRegionsResponse()
+    {
+        $xml = '<response>
+                    <request>regions</request>
+                    <region region_code="46" name="Alt">
+                        <courier>
+                            <city city_code="20">Barnaul</city>
+                            <city city_code="22">NeBarnaul</city>
+                        </courier>
+                        <pickup>
+                            <office office_code="32" city_code="20">ul 1</office>
+                            <office office_code="33" city_code="22">ul 3</office>
+                        </pickup>
+                    </region>
+                    <region region_code="47" name="neAlt">
+                        <courier>
+                            <city city_code="20">Barnaul</city>
+                            <city city_code="22">NeBarnaul</city>
+                        </courier>
+                        <pickup>
+                            <office office_code="32" city_code="20">ul 1</office>
+                            <office office_code="33" city_code="22">ul 3</office>
+                        </pickup>
+                    </region>
+                </response>
+                ';
+        $obj = $this->mapper->map($xml);
+
+        $expected = new Response();
+        $expected->setItems([(new Request())->setRequest('regions'),
+            (new Region())->setRegionCode(46)->setName('Alt')
+                ->setCourier([
+                    (new City())->setCity('Barnaul')->setCityCode(20),
+                    (new City())->setCity('NeBarnaul')->setCityCode(22),
+                ])->setPickup([
+                    (new Office())->setOfficeCode(32)->setCityCode(20)->setOffice('ul 1'),
+                    (new Office())->setOfficeCode(33)->setCityCode(22)->setOffice('ul 3'),
+                ]),
+            (new Region())->setRegionCode(47)->setName('neAlt')
+                ->setCourier([
+                    (new City())->setCity('Barnaul')->setCityCode(20),
+                    (new City())->setCity('NeBarnaul')->setCityCode(22),
+                ])->setPickup([
+                    (new Office())->setOfficeCode(32)->setCityCode(20)->setOffice('ul 1'),
+                    (new Office())->setOfficeCode(33)->setCityCode(22)->setOffice('ul 3'),
+                ]),
+        ]);
+        $this->assertEquals(print_r($expected, true), print_r($obj, true));
+    }
 }

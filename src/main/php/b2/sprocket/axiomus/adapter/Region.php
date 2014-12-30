@@ -7,6 +7,30 @@ namespace b2\sprocket\axiomus\adapter;
 class Region {
     private $regionCode;
     private $name;
+    private $courier;
+    private $pickup;
+
+    function getPickup()
+    {
+        return $this->pickup;
+    }
+
+    function setPickup($pickup)
+    {
+        $this->pickup = $pickup;
+        return $this;
+    }
+
+    function getCourier()
+    {
+        return $this->courier;
+    }
+
+    function setCourier($courier)
+    {
+        $this->courier = $courier;
+        return $this;
+    }
 
     function getRegionCode()
     {
