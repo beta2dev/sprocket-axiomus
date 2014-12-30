@@ -139,21 +139,21 @@ class XmlGetTest extends \PHPUnit_Framework_TestCase {
         ]);
         $this->assertEquals(print_r($expected, true), print_r($obj, true));
     }
-    /*function testGetCarryResponse()
+    function testGetCarryResponse()
     {
         $xml = '<response>
                     <request>carry</request>
                     <carry_list>
-                        <office office_code="0" type="PVZ3" office_name="MSK" office_address="some_addr" city_code="0" city_name="some_name" GPS="123.123, 123.123" WorkSchelude="pn,vt,sr" Area="MSK"/>
-                        <office office_code="0" type="PVZ" office_name="MSK" office_address="some_addr" city_code="0" city_name="some_name" GPS="123.123, 123.123" WorkSchelude="pn,vt,sr" Area="MSK"/>
-                        <office office_code="0" type="PVZ4" office_name="MSK" office_address="some_addr" city_code="0" city_name="some_name" GPS="123.123, 123.123" WorkSchelude="pn,vt,sr" Area="MSK"/>
+                        <office office_code="0" type="PVZ3" office_name="MSK" office_address="some_addr" city_code="0" city_name="some_name" GPS="123.123, 123.123" WorkSchedule="pn,vt,sr" Area="MSK"/>
+                        <office office_code="0" type="PVZ" office_name="MSK" office_address="some_addr" city_code="0" city_name="some_name" GPS="123.123, 123.123" WorkSchedule="pn,vt,sr" Area="MSK"/>
+                        <office office_code="0" type="PVZ4" office_name="MSK" office_address="some_addr" city_code="0" city_name="some_name" GPS="123.123, 123.123" WorkSchedule="pn,vt,sr" Area="MSK"/>
                     </carry_list>>
                 </response>
                 ';
         $obj = $this->mapper->map($xml);
 
         $expected = new Response();
-        $expected->setItems([(new Request())->setRequest('carry'),(new ListResponse())->setOffices([
+        $expected->setItems([(new Request())->setRequest('carry'),(new ArraysResponse())->setCarryList([
             (new Office())->setOfficeCode(0)->setType('PVZ3')->setOfficeName('MSK')->setOfficeAddress('some_addr')->setCityCode(0)->setCityName('some_name')->setGps('123.123, 123.123')->setWorkSchedule('pn,vt,sr')->setArea('MSK'),
             (new Office())->setOfficeCode(0)->setType('PVZ')->setOfficeName('MSK')->setOfficeAddress('some_addr')->setCityCode(0)->setCityName('some_name')->setGps('123.123, 123.123')->setWorkSchedule('pn,vt,sr')->setArea('MSK'),
             (new Office())->setOfficeCode(0)->setType('PVZ4')->setOfficeName('MSK')->setOfficeAddress('some_addr')->setCityCode(0)->setCityName('some_name')->setGps('123.123, 123.123')->setWorkSchedule('pn,vt,sr')->setArea('MSK'),
@@ -166,21 +166,21 @@ class XmlGetTest extends \PHPUnit_Framework_TestCase {
     {
         $xml = '<response>
                     <request>carry</request>
-                    <carry_list>
+                    <pickup_list>
                         <office code="0" type="PVZ3" name="MSK" address="some_addr" city="Voronej" region="MSK"/>
-                    </carry_list>>
+                        <office code="0" type="PVZ2" name="MSK" address="some_addr" city="Voronej" region="MSK"/>
+                    </pickup_list>>
                 </response>
                 ';
         $obj = $this->mapper->map($xml);
 
         $expected = new Response();
-        $expected->setItems([(new Request())->setRequest('carry'),(new ListResponse())->setOffices([
+        $expected->setItems([(new Request())->setRequest('carry'),(new ArraysResponse())->setPickupList([
             (new Office())->setCode(0)->setType('PVZ3')->setName('MSK')->setAddress('some_addr')->setCity('Voronej')->setRegion('MSK'),
             (new Office())->setCode(0)->setType('PVZ2')->setName('MSK')->setAddress('some_addr')->setCity('Voronej')->setRegion('MSK'),
-            (new Office())->setCode(0)->setType('PVZ1')->setName('MSK')->setAddress('some_addr')->setCity('Voronej')->setRegion('MSK'),
         ])
         ]);
         $this->assertEquals(print_r($expected, true), print_r($obj, true));
     }
-    */
+
 }

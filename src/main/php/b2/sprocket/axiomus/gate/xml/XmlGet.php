@@ -24,6 +24,10 @@ class XmlGet extends \b2\util\XmlMapper{
     {
         $mapper->origin(self::CLASS_PATH . 'ArraysResponse')->objectFreeContext('office => carryList[]');
     }
+    function tag_pickup_list($mapper)
+    {
+        $mapper->origin(self::CLASS_PATH . 'ArraysResponse')->objectFreeContext('office => pickupList[]');
+    }
     function tag_packs($mapper)
     {
         $mapper->origin(self::CLASS_PATH . 'ArraysResponse')->objectFreeContext('pack => packs[]');
@@ -73,7 +77,8 @@ class XmlGet extends \b2\util\XmlMapper{
     function tag_office($mapper)
     {
         $mapper->origin(self::CLASS_PATH . 'Office')->int('(@office_code) => officeCode')->string('@type')->string('(@office_name) => officeName')->string('(@office_address) => officeAddress')
-            ->int('(@city_code) => cityCode')->string('(@city_name) => cityName')->string('@GPS')->string('@WorkSchedule')->string('@Area')->string('@name')->string('@address')->string('@region')->int('@code');
+            ->int('(@city_code) => cityCode')->string('(@city_name) => cityName')->string('@GPS')->string('@WorkSchedule')->string('@Area')->string('@name')->string('@address')->string('@region')->int('@code')
+            ->string('@city');
     }
 
     function tag_region($mapper)
