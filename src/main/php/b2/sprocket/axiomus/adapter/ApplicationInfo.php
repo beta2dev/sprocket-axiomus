@@ -41,5 +41,4 @@ class ApplicationInfo {
         $this->customerPrice = $customerPrice;
         return $this;
     }
-
 }

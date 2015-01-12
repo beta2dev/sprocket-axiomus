@@ -39,7 +39,9 @@ class XmlGet extends \b2\util\XmlMapper{
 
     function tag_auth($mapper)
     {
-        $mapper->origin(self::CLASS_PATH . 'Auth')->int('@objectid')->string('text() => auth');
+        $mapper->origin(self::CLASS_PATH . 'Auth')
+            ->int('@objectid')
+            ->string('text() => auth');
     }
     function tag_request($mapper)
     {
@@ -47,12 +49,24 @@ class XmlGet extends \b2\util\XmlMapper{
     }
     function tag_status($mapper)
     {
-        $mapper->origin(self::CLASS_PATH . 'Status')->float('@price')->int('@code')->string('text() =>status');
+        $mapper->origin(self::CLASS_PATH . 'Status')
+            ->float('@price')
+            ->int('@code')
+            ->string('text() =>status');
     }
 
     function tag_order($mapper)
     {
-        $mapper->origin(self::CLASS_PATH . 'Order')->float('@price')->float('(@incl_deliv_sum) => inclDelivSum')->applicationInfo()->int('@group')->int('(@export_order) => exportOrder')->int('@fid');
+        $mapper->origin(self::CLASS_PATH . 'Order')
+            ->float('@price')
+            ->float('(@incl_deliv_sum) => inclDelivSum')
+            ->applicationInfo()
+            ->int('@group')
+            ->int('(@export_order) => exportOrder')
+            ->int('@fid')
+            ->float('(@total_price) => totalPrice')
+            ->float('(@agent_price) => agentPrice')
+            ->float('(@subagent_price) => subagentPrice');
     }
 
     function tag_d_date($mapper)
@@ -61,17 +75,25 @@ class XmlGet extends \b2\util\XmlMapper{
     }
     function tag_item($mapper)
     {
-        $mapper->origin(self::CLASS_PATH . 'Item')->string('@name')->int('@quantity')->float('@price');
+        $mapper->origin(self::CLASS_PATH . 'Item')
+            ->string('@name')
+            ->int('@quantity')
+            ->float('@price');
     }
 
     function tag_poststatus($mapper)
     {
-        $mapper->origin(self::CLASS_PATH . 'PostStatus')->int('@tracking')->float('@postprice');
+        $mapper->origin(self::CLASS_PATH . 'PostStatus')
+            ->int('@tracking')
+            ->float('@postprice');
     }
 
     function tag_pack($mapper)
     {
-        $mapper->origin(self::CLASS_PATH . 'Pack')->int('@number')->int('@places')->int('@status');
+        $mapper->origin(self::CLASS_PATH . 'Pack')
+            ->int('@number')
+            ->int('@places')
+            ->int('@status');
     }
 
     function tag_office($mapper)
@@ -93,18 +115,32 @@ class XmlGet extends \b2\util\XmlMapper{
 
     function tag_region($mapper)
     {
-        $mapper->origin(self::CLASS_PATH. 'Region')->int('(@region_code) => regionCode')->string('name')
+        $mapper->origin(self::CLASS_PATH . 'Region')
+            ->int('(@region_code) => regionCode')
+            ->string('name')
             ->object('courier/city => courier[]')
                 ->up()
             ->object('pickup/office => pickup[]');
     }
     function tag_okey($mapper)
     {
-        $mapper->origin(self::CLASS_PATH . 'Okey')->applicationInfo()->int('(@status_code) => statusCode')->string('(@status_name) => statusName')->float('@price')->string('text() => okey');
+        $mapper->origin(self::CLASS_PATH . 'Okey')
+            ->applicationInfo()
+            ->int('(@status_code) => statusCode')
+            ->string('(@status_name) => statusName')
+            ->float('@price')
+            ->string('text() => okey');
     }
 
-    function tag_city()
+    function tag_city($mapper)
     {
-        $this->origin(self::CLASS_PATH . 'City')->int('(@city_code) => cityCode')->string('text() => city');
+        $mapper->origin(self::CLASS_PATH . 'City')
+            ->int('(@city_code) => cityCode')
+            ->string('text() => city');
+    }
+
+    function tag_version($mapper)
+    {
+        $mapper->origin(self::CLASS_PATH . 'Version')->float('text() => version');
     }
 }

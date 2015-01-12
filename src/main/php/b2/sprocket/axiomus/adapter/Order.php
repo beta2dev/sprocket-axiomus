@@ -6,6 +6,7 @@ namespace b2\sprocket\axiomus\adapter;
 
 class Order extends ApplicationInfo{
 
+
     private $price;
     private $inclDelivSum;
     private $exportOrder;
@@ -14,6 +15,42 @@ class Order extends ApplicationInfo{
     private $group;
     private $statusCode;
     private $statusName;
+    private $totalPrice;
+    private $agentPrice;
+    private $subagentPrice;
+
+    function getTotalPrice()
+    {
+        return $this->totalPrice;
+    }
+
+    function setTotalPrice($totalPrice)
+    {
+        $this->totalPrice = $totalPrice;
+        return $this;
+    }
+
+    function getAgentPrice()
+    {
+        return $this->agentPrice;
+    }
+
+    function setAgentPrice($agentPrice)
+    {
+        $this->agentPrice = $agentPrice;
+        return $this;
+    }
+
+    function getSubagentPrice()
+    {
+        return $this->subagentPrice;
+    }
+
+    function setSubagentPrice($subagentPrice)
+    {
+        $this->subagentPrice = $subagentPrice;
+        return $this;
+    }
 
     function getFid()
     {
