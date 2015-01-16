@@ -18,7 +18,19 @@ class Office extends City
     protected $name;
     protected $address;
     protected $region;
+    protected $onlyPrepaidOrders;
     protected $office;
+
+    function getOnlyPrepaidOrders()
+    {
+        return $this->onlyPrepaidOrders;
+    }
+
+    function setOnlyPrepaidOrders($onlyPrepaidOrders)
+    {
+        $this->onlyPrepaidOrders = $onlyPrepaidOrders;
+        return $this;
+    }
 
     function getOffice()
     {

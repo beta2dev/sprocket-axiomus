@@ -247,7 +247,7 @@ class XmlGetTest extends \PHPUnit_Framework_TestCase {
                 <response>
                     <request>boxberry_pickup</request>
                     <pickup_list>
-                        <office office_code="191" office_name="Абакан" office_address="some address" city_code="5" city_name="Абакан" GPS="53.123,91.123" Area="some area" WorkSchedule="some time"/>
+                        <office office_code="191" office_name="Абакан" office_address="some address" city_code="5" city_name="Абакан" GPS="53.123,91.123" Area="some area" WorkSchedule="some time" OnlyPrepaidOrders="1"/>
                         <office office_code="291" office_name="neАбакан" office_address="ne some address" city_code="52" city_name="neАбакан" GPS="53.123,91.123" Area="some area" WorkSchedule="some time"/>
                     </pickup_list>
                 </response>
@@ -256,7 +256,7 @@ class XmlGetTest extends \PHPUnit_Framework_TestCase {
 
         
         $this->expected->setItems([(new Request())->setRequest('boxberry_pickup'),(new ArraysResponse())->setPickupList([
-            (new Office())->setOfficeCode(191)->setOfficeName('Абакан')->setOfficeAddress('some address')->setCityCode(5)->setCityName('Абакан')->setGps('53.123,91.123')->setWorkSchedule('some time')->setArea('some area'),
+            (new Office())->setOfficeCode(191)->setOfficeName('Абакан')->setOfficeAddress('some address')->setCityCode(5)->setCityName('Абакан')->setGps('53.123,91.123')->setWorkSchedule('some time')->setArea('some area')->setOnlyPrepaidOrders(1),
             (new Office())->setOfficeCode(291)->setOfficeName('neАбакан')->setOfficeAddress('ne some address')->setCityCode(52)->setCityName('neАбакан')->setGps('53.123,91.123')->setWorkSchedule('some time')->setArea('some area'),
             ])
         ]);

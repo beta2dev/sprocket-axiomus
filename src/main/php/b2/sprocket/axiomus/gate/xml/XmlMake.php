@@ -102,6 +102,7 @@ class MakeXml
         $xml->setAttributes($obj);
         $options = new \b2\templates\XmlTemplateOptions();
         $options->addConverter('boolean', function($value) {return $value ? 'yes' : 'no';});
+        $options->xmlHeader = '<?xml version="1.0" standalone="yes"?>';
         $xml->setOptions($options);
         return $xml->makeSimpleXML()->asXML();
     }

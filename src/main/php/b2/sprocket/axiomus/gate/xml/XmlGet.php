@@ -110,7 +110,8 @@ class XmlGet extends \b2\util\XmlMapper{
             ->string('@Area')->string('@name')
             ->string('@address')->string('@region')
             ->int('@code')->string('@city')
-            ->string('text() => office');
+            ->string('text() => office')
+            ->int('@OnlyPrepaidOrders');
     }
 
     function tag_region($mapper)

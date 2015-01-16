@@ -20,7 +20,7 @@ use b2\sprocket\axiomus\api\SelfExportOrder;
 
 define('B2_FOUNDATION_TEMPLATES','C:\Work\Axiomus\foundation\src\main\php\b2\templates');
 define('B2_AXIOMUS_TEMPLATES','C:\Work\Axiomus\sprocket-axiomus\src\main\php\b2\sprocket\axiomus');
-define('XML_HEADER', '<?xml version="1.0" encoding="UTF-8"?>');
+define('XML_HEADER', '<?xml version="1.0" standalone="yes"?>');
 
 require_once B2_AXIOMUS_TEMPLATES . '\gate\xml\XmlMake.php';
 require_once __DIR__ . '\..\..\..\test.boot.php';
