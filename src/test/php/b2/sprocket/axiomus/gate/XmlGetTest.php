@@ -181,6 +181,17 @@ class XmlGetTest extends \PHPUnit_Framework_TestCase
         $this->check($xml, $expected);
     }
 
+    function testVersion()
+    {
+        $xml = '<?xml version="1.0" encoding="utf-8" ?>
+                <response>
+                    <request>get_version</request>
+                    <version>2.25</version>
+                </response>';
+        $expected = new ApplicationResponse();
+        $expected->setVersion(2.25);
+        $this->check($xml, $expected);
+    }
     private function check($xml, $expected)
     {
         $xml = simplexml_load_string($xml);

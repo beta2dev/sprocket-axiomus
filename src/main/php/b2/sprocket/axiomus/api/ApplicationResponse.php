@@ -10,6 +10,18 @@ class ApplicationResponse
     private $dayDate;
     private $auth;
     private $status;
+    private $version;
+
+    function getVersion()
+    {
+        return $this->version;
+    }
+
+    function setVersion($version)
+    {
+        $this->version = $version;
+        return $this;
+    }
 
     function getAuth()
     {

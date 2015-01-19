@@ -37,12 +37,19 @@ class XmlGet extends \b2\util\XmlMapper
             case 'status_list':
                 $obj = $this->getList('okeylist/okey')->map($xml, new GetListResponse());
                 break;
+            case 'get_version':
+                $obj = $this->getVersion()->map($xml, new ApplicationResponse());
+                break;
             default:
                 var_dump($xml->request);
         }
         return $obj;
     }
 
+    private function getVersion()
+    {
+        return $this->string('version');
+    }
     private function newResponse()
     {
         return $this
