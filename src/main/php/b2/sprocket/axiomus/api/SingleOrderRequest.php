@@ -47,7 +47,7 @@ class SingleOrderRequest
     function setAuth($auth)
     {
         if (is_string($auth)){
-            $this->auth = new Auth();
+            $this->auth = new AuthRequest();
             $this->auth->setUkey($auth);
         }
         else {
@@ -75,7 +75,7 @@ class SingleOrderRequest
                             $this->order = new ExportOrder();
                             break;
                         case 'order':
-                            $this->order = new Order();
+                            $this->order = new OrderRequest();
                             break;
                         case 'selfExport':
                             $this->order = new SelfExportOrder();

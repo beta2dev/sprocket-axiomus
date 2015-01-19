@@ -2,7 +2,7 @@
 
 namespace b2\sprocket\axiomus\api;
 
-class SelfExportOrder extends Order
+class SelfExportOrder extends OrderRequest
 {
     protected $car;
     protected $quantity;

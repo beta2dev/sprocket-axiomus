@@ -2,7 +2,7 @@
 
 namespace b2\sprocket\axiomus\api;
 
-class ExportOrder extends Order
+class ExportOrder extends OrderRequest
 {
     protected $exportQuantity;
 

@@ -2,7 +2,7 @@
 
 namespace b2\sprocket\axiomus\api;
 
-class CarryOrder extends Order
+class CarryOrder extends OrderRequest
 {
     protected $endDate;
     protected $office;

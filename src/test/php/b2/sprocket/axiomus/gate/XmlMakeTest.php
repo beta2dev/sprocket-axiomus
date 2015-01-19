@@ -3,10 +3,12 @@
 namespace b2\sprocket\axiomus\gate;
 
 use b2\sprocket\axiomus\api\Auth;
+use b2\sprocket\axiomus\api\AuthRequest;
 use b2\sprocket\axiomus\api\Mode;
 use b2\sprocket\axiomus\api\OrderAddress;
 use b2\sprocket\axiomus\api\DelivsetBelow;
 use b2\sprocket\axiomus\api\OrderDelivset;
+use b2\sprocket\axiomus\api\OrderRequest;
 use \b2\sprocket\axiomus\api\SingleOrderRequest;
 use b2\sprocket\axiomus\api\OrderContent;
 use b2\sprocket\axiomus\api\BoxberryServices;
@@ -108,7 +110,7 @@ class XmlMakeTest extends \PHPUnit_Framework_TestCase {
     function testSingleOrderDeliveryRequest_Arrays()
     {
         $delivery = new SingleOrderRequest();
-        $auth = new Auth();
+        $auth = new AuthRequest();
 
         $delivset = [
             'returnPrice' => 20.00,
@@ -203,14 +205,14 @@ class XmlMakeTest extends \PHPUnit_Framework_TestCase {
         $orderContent = new OrderContent();
         $orderContent->setItems([$item->asArray()])->setDelivset($delivset)->setServices($services)->setContacts('тел. 8905')->setDescription('сзади');
 
-        $order = new Order();
+        $order = new OrderRequest();
         $order->setOrderContent($orderContent)->setAddress('Москва...')->setBeginTime('12:00')->setCity(0)->setDayDate('2009-12-14')->setEmail('mail@ru')->setEndTime('13:00')
             ->setSms(8905)->setName('Кл')->setInnerId('123')->setPlaces(1);
 
         $mode = new Mode();
         $mode->setOrderType('new');
 
-        $auth = new Auth();
+        $auth = new AuthRequest();
         $auth->setUkey('321ewq')->setCheckSum('123qwe');
 
         $delivery = new SingleOrderRequest();
@@ -242,7 +244,7 @@ class XmlMakeTest extends \PHPUnit_Framework_TestCase {
     function testSingleOrderDeliveryRequest_WithioutDelivset()
     {
         $delivery = new SingleOrderRequest();
-        $auth = new Auth();
+        $auth = new AuthRequest();
 
         $services = ['cash' => true, 'cheque' => false];
         $items = [
@@ -304,7 +306,7 @@ class XmlMakeTest extends \PHPUnit_Framework_TestCase {
     function testSingleOrderDeliveryRequest_MinOrder()
     {
         $delivery = new SingleOrderRequest();
-        $auth = new Auth();
+        $auth = new AuthRequest();
 
         $items = [[
             'name' => 'товар 1',
@@ -349,7 +351,7 @@ class XmlMakeTest extends \PHPUnit_Framework_TestCase {
     function testSingleOrderDeliveryRequest_MinWithDiscount()
     {
         $delivery = new SingleOrderRequest();
-        $auth = new Auth();
+        $auth = new AuthRequest();
 
         $items = [[
             'name' => 'товар 1',
@@ -412,7 +414,7 @@ class XmlMakeTest extends \PHPUnit_Framework_TestCase {
     function testSingleOrderPostRequest()
     {
         $delivery = new SingleOrderRequest();
-        $auth = new Auth();
+        $auth = new AuthRequest();
 
         $services = [
             'valuation' => true,
@@ -480,7 +482,7 @@ class XmlMakeTest extends \PHPUnit_Framework_TestCase {
     function testSingleOrderPostRequest_OneArray()
     {
         $delivery = new SingleOrderRequest();
-        $auth = new Auth();
+        $auth = new AuthRequest();
 
         $order = [
             'post' => [
@@ -552,7 +554,7 @@ class XmlMakeTest extends \PHPUnit_Framework_TestCase {
     function testSingleOrderDpdRequest()
     {
         $delivery = new SingleOrderRequest();
-        $auth = new Auth();
+        $auth = new AuthRequest();
 
         $services = [
             'valuation' => true,
@@ -624,7 +626,7 @@ class XmlMakeTest extends \PHPUnit_Framework_TestCase {
     function testSingleOrderCarryRequest_withNotNecessaryData()
     {
         $delivery = new SingleOrderRequest();
-        $auth = new Auth();
+        $auth = new AuthRequest();
 
         $delivset = [
             'returnPrice' => 20,
@@ -710,7 +712,7 @@ class XmlMakeTest extends \PHPUnit_Framework_TestCase {
     function testSingleOrderNewExportRequest()
     {
         $newCarry = new SingleOrderRequest();
-        $auth = new Auth();
+        $auth = new AuthRequest();
         $auth->setUkey('asd123')->setCheckSum('123asd');
         $mode = new Mode();
         $mode->setOrderType('new_export');
@@ -771,7 +773,7 @@ class XmlMakeTest extends \PHPUnit_Framework_TestCase {
         $order = new SelfExportOrder();
         $order->setName('vasya')->setCar('A100AA100')->setDayDate('2010-11-25')->setBeginTime('11:00')->setEndTime('13:00')->setQuantity(2)->setPlaces(1)->setTransit(false)->setOrderContent($content);
 
-        $selfExport->setMode('new_self_export')->setAuth((new Auth())->setUkey('123qwe')->setCheckSum('qwe123'))->setOrder($order);
+        $selfExport->setMode('new_self_export')->setAuth((new AuthRequest())->setUkey('123qwe')->setCheckSum('qwe123'))->setOrder($order);
         $this->assertXmlStringEqualsXmlString(
             XML_HEADER .
             '<singleorder>
@@ -808,10 +810,10 @@ class XmlMakeTest extends \PHPUnit_Framework_TestCase {
         $content = new OrderContent();
         $content->setItems($items)->setServices($services)->setAddress($address);
 
-        $order = new Order();
+        $order = new OrderRequest();
         $order->setName('vasya')->setDayDate('2010-11-25')->setBeginTime('11:00')->setEndTime('13:00')->setOrderContent($content);
 
-        $regionCourier->setMode('new_region_courier')->setAuth((new Auth())->setUkey('123qwe')->setCheckSum('qwe123'))->setOrder($order);
+        $regionCourier->setMode('new_region_courier')->setAuth((new AuthRequest())->setUkey('123qwe')->setCheckSum('qwe123'))->setOrder($order);
         $this->assertXmlStringEqualsXmlString(
             XML_HEADER .
             '<singleorder>
@@ -850,10 +852,10 @@ class XmlMakeTest extends \PHPUnit_Framework_TestCase {
         $content = new OrderContent();
         $content->setItems($items)->setServices($services)->setAddress($address);
 
-        $order = new Order();
+        $order = new OrderRequest();
         $order->setName('vasya')->setDayDate('2010-11-25')->setBeginTime('11:00')->setEndTime('13:00')->setOrderContent($content);
 
-        $regionPickup->setMode('new_region_courier')->setAuth((new Auth())->setUkey('123qwe')->setCheckSum('qwe123'))->setOrder($order);
+        $regionPickup->setMode('new_region_courier')->setAuth((new AuthRequest())->setUkey('123qwe')->setCheckSum('qwe123'))->setOrder($order);
         $this->assertXmlStringEqualsXmlString(
             XML_HEADER .
             '<singleorder>
@@ -892,10 +894,10 @@ class XmlMakeTest extends \PHPUnit_Framework_TestCase {
         $content = new OrderContent();
         $content->setItems($items)->setServices($services)->setAddress($address);
 
-        $order = new Order();
+        $order = new OrderRequest();
         $order->setName('vasya')->setDayDate('2010-11-25')->setOrderContent($content);
 
-        $boxberryPickup->setMode('new_region_courier')->setAuth((new Auth())->setUkey('123qwe')->setCheckSum('qwe123'))->setOrder($order);
+        $boxberryPickup->setMode('new_region_courier')->setAuth((new AuthRequest())->setUkey('123qwe')->setCheckSum('qwe123'))->setOrder($order);
         $this->assertXmlStringEqualsXmlString(
             XML_HEADER .
             '<singleorder>
@@ -919,7 +921,7 @@ class XmlMakeTest extends \PHPUnit_Framework_TestCase {
     function testSingleOrderGetPriceDpdRequest()
     {
         $delivery = new SingleOrderRequest();
-        $auth = new Auth();
+        $auth = new AuthRequest();
 
         $services = [
             'valuation' => true,
