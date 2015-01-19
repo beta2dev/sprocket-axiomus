@@ -1,10 +1,11 @@
 <?php
 
 
-namespace b2\sprocket\axiomus\adapter;
+namespace b2\sprocket\axiomus\api;
 
 
-class Status {
+class Status
+{
     private $price;
     private $code;
     private $status;

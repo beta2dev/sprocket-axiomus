@@ -1,6 +1,6 @@
 <?php
 
-namespace b2\sprocket\axiomus\gate\xml;
+namespace b2\sprocket\axiomus\gate;
 
 use b2\sprocket\axiomus\api\Auth;
 use b2\sprocket\axiomus\api\Mode;
@@ -22,8 +22,8 @@ define('B2_FOUNDATION_TEMPLATES','C:\Work\Axiomus\foundation\src\main\php\b2\tem
 define('B2_AXIOMUS_TEMPLATES','C:\Work\Axiomus\sprocket-axiomus\src\main\php\b2\sprocket\axiomus');
 define('XML_HEADER', '<?xml version="1.0" standalone="yes"?>');
 
-require_once B2_AXIOMUS_TEMPLATES . '\gate\xml\XmlMake.php';
-require_once __DIR__ . '\..\..\..\test.boot.php';
+require_once B2_AXIOMUS_TEMPLATES . '\gate\XmlMake.php';
+require_once __DIR__ . '\..\..\test.boot.php';
 
 
 class XmlMakeTest extends \PHPUnit_Framework_TestCase {

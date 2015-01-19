@@ -2,7 +2,7 @@
 
 namespace b2\sprocket\axiomus\api;
 
-class OrderPost extends Order
+class OrderPost extends OrderRequest
 {
     protected $postType;
 

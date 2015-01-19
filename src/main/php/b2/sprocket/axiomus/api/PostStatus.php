@@ -1,10 +1,11 @@
 <?php
 
 
-namespace b2\sprocket\axiomus\adapter;
+namespace b2\sprocket\axiomus\api;
 
 
-class PostStatus {
+class PostStatus
+{
     private $tracking;
     private $postprice;
 
@@ -29,6 +30,4 @@ class PostStatus {
         $this->postprice = $postprice;
         return $this;
     }
-
-
 }

@@ -4,7 +4,7 @@ namespace b2\sprocket\axiomus\api;
 
 use b2\sprocket\axiomus\api\OrderContent;
 
-class Order
+class OrderRequest
 {
     protected $okey;
     protected $innerId;

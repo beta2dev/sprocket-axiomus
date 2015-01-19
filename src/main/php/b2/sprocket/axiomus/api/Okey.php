@@ -1,11 +1,11 @@
 <?php
 
 
-namespace b2\sprocket\axiomus\adapter;
+namespace b2\sprocket\axiomus\api;
 
 
-class Okey extends ApplicationInfo{
-
+class Okey extends ApplicationInfo
+{
     private $statusCode;
     private $statusName;
     private $price;

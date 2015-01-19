@@ -1,12 +1,11 @@
 <?php
 
 
-namespace b2\sprocket\axiomus\adapter;
+namespace b2\sprocket\axiomus\api;
 
 
-class Order extends ApplicationInfo{
-
-
+class OrderResponse extends ApplicationInfo
+{
     private $price;
     private $inclDelivSum;
     private $exportOrder;

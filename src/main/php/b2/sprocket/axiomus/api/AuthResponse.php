@@ -1,10 +1,11 @@
 <?php
 
 
-namespace b2\sprocket\axiomus\adapter;
+namespace b2\sprocket\axiomus\api;
 
 
-class Auth{
+class AuthResponse
+{
     private $objectid;
     private $auth;
 

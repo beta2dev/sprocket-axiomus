@@ -1,8 +1,8 @@
 <?php
 
-namespace b2\sprocket\axiomus\gate\xml;
+namespace b2\sprocket\axiomus\gate;
 
-define("LOCAL_PATH", __DIR__ . DIRECTORY_SEPARATOR);
+define("LOCAL_PATH", __DIR__ . DIRECTORY_SEPARATOR . 'xml' . DIRECTORY_SEPARATOR);
 
 class MakeXml
 {

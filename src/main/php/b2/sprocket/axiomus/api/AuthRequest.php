@@ -2,7 +2,7 @@
 
 namespace b2\sprocket\axiomus\api;
 
-class Auth
+class AuthRequest
 {
     protected $ukey;
     protected $checkSum;
@@ -11,6 +11,7 @@ class Auth
     {
         return $this->checkSum;
     }
+
     function setCheckSum($sum)
     {
         $this->checkSum = $sum;
@@ -21,6 +22,7 @@ class Auth
     {
         return $this->ukey;
     }
+
     function setUkey($key)
     {
         $this->ukey = $key;

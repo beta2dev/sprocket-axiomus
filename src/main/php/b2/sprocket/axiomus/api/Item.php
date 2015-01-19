@@ -1,10 +1,11 @@
 <?php
 
 
-namespace b2\sprocket\axiomus\adapter;
+namespace b2\sprocket\axiomus\api;
 
 
-class Item {
+class Item
+{
     private $name;
     private $quantity;
     private $price;

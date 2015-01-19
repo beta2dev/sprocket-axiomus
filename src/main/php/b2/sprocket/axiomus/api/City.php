@@ -1,11 +1,11 @@
 <?php
 
 
-namespace b2\sprocket\axiomus\adapter;
+namespace b2\sprocket\axiomus\api;
 
 
-class City {
-
+class City
+{
     protected $cityCode;
     protected $city;
 

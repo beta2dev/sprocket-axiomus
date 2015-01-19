@@ -1,10 +1,11 @@
 <?php
 
 
-namespace b2\sprocket\axiomus\adapter;
+namespace b2\sprocket\axiomus\api;
 
 
-class ApplicationInfo {
+class ApplicationInfo
+{
     protected $id;
     protected $innerId;
     protected $customerPrice;

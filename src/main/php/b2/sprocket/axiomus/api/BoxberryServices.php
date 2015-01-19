@@ -3,8 +3,8 @@
 namespace b2\sprocket\axiomus\api;
 
 
-class BoxberryServices extends OrderServices{
-
+class BoxberryServices extends OrderServices
+{
     private $checkup;
 
     function getCheckup()
