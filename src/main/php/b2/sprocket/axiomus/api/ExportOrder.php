@@ -12,6 +12,18 @@ class ExportOrder extends OrderTimeScope
     private $dayDate; // New
     private $exportQuantity;
     private $gardenRing;
+    private $transit;
+
+    function getTransit()
+    {
+        return $this->transit;
+    }
+
+    function setTransit($transit)
+    {
+        $this->transit = $transit;
+        return $this;
+    }
 
     function getAddress()
     {
