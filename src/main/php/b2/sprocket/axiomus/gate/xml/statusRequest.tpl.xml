@@ -1,0 +1,4 @@
+<singleorder xmlns:a="b2tplxml">
+    <mode a:bind="$mode" a:text="@orderType"/>
+    <okey a:text="$okey"/>
+</singleorder>

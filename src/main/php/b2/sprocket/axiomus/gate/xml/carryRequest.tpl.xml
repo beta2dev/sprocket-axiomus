@@ -1,0 +1,20 @@
+<singleorder xmlns:a="b2tplxml">
+    <mode a:bind="$mode" a:text="@orderType" type="?@modeType"/>
+    <auth a:bind="$auth" ukey="@ukey" checksum="@checksum"/>
+    <order okey="?@okey" inner_id="?@innerId" name="@name" b_date="@beginDate" e_date="@endDate" incl_deliv_sum="?@inclDelivSum" office="?@office"
+           places="@places" sms="?@sms" sms_sender="?@smsSender" email="?@email" discount_value="?@discountValue" discount_unit="?@discountUnit"
+           a:bind="$order">
+        <contacts a:bind="@orderContent" a:text="@contacts"/>
+        <description a:bind="@orderContent" a:output="@orderContent.description" a:text="@description"/>
+        <services a:bind="@orderContent.services" a:output="@orderContent.services" cash="?@cash" cheque="?@cheque" card="?@card" big="?@big" />
+        <items a:output="@orderContent.items">
+            <item a:bindlist="@orderContent.items" name="@name" weight="@weight" quantity="@quantity" price="@price" orderId="?@orderId" expmode="?@expmode"/>
+        </items>
+        <delivset a:output="@orderContent.delivset" a:bind="@orderContent.delivset" return_price="@returnPrice" above_price="@abovePrice">
+            <below a:bindlist="@belows" below_sum="@belowSum" price="@price"/>
+        </delivset>
+        <discountset a:output="@orderContent.discountset" a:bind="@orderContent.discountset" above_discount="@aboveDiscount" >
+            <below a:bindlist="@belows" below_sum="@belowSum" discount="@discount"/>
+        </discountset>
+    </order>
+</singleorder>

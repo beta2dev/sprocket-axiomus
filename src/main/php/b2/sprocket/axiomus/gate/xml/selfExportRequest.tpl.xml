@@ -1,0 +1,12 @@
+<singleorder xmlns:a="b2tplxml">
+    <mode a:bind="$mode" a:text="@orderType" type="?@modeType"/>
+    <auth a:bind="$auth" ukey="@ukey" checksum="@checksum"/>
+    <order okey="?@okey" name="@name" car="?@car" d_date="@dayDate" b_time="@beginTime" e_time="@endTime" quantity="@quantity" places="@places" transit="?@transit" a:bind="$order">
+        <contacts a:bind="@orderContent" a:text="@contacts"/>
+        <description a:bind="@orderContent" a:output="@orderContent.description" a:text="@description"/>
+        <services a:bind="@orderContent.services" a:output="@orderContent.services" warrant="?@warrant" transit="?@transit" />
+        <items a:output="@orderContent.items">
+            <item a:bindlist="@orderContent.items" name="@name" weight="@weight" quantity="@quantity" price="@price" oid="@orderId"/>
+        </items>
+    </order>
+</singleorder>
