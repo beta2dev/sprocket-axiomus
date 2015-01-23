@@ -15,6 +15,7 @@ class XmlGet extends \b2\util\XmlMapper
     function responseMap($xml)
     {
         $obj = null;
+        $xml = simplexml_load_string($xml);
         switch ($xml->request) {
             case 'new':
                 $obj = $this->newResponse()->map($xml, new ApplicationResponse());

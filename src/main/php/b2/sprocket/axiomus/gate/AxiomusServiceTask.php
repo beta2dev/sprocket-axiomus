@@ -25,43 +25,17 @@ class AxiomusServiceTask extends Task implements AxiomusService
 
     function newOrder(AppInfo $data, $orderType, $order, TaskRef $replyTo)
     {
-        $singleOrder = new SingleOrderRequest();
-
-        $mode = $orderType == 'delivery' ? 'new' : 'new_' . $orderType;
-        $auth = (new AuthRequest())
-            ->setUkey($data->getUkey())
-            ->setCheckSum($this->getCheckSum($data->getUid(), $order));
-        $singleOrder->setOrder($order)->setMode($mode)->setAuth($auth);
-        $singleOrder = (new XmlMake)->makeXml($singleOrder);
-
-        $ref = $this->getSelfObjectRef();
-
-        $this->sendHttpRequest('POST', 'some-url', $singleOrder, $ref);
-        // todo дописать здесь ответ от сервака на $replyTo
-        // \b2\task::createClientServiceProxy($replyTo->getAddress(), $replyTo->getClass());
+        $this->createSingleOrder($data, $orderType, 'new', $order, $replyTo);
     }
 
     function updateOrder(AppInfo $data, $orderType, $order, TaskRef $replyTo)
     {
-        $singleOrder = new SingleOrderRequest();
-
-        $mode = $orderType == 'delivery' ? 'update' : 'update_' . $orderType;
-        $auth = (new AuthRequest())
-            ->setUkey($data->getUkey())
-            ->setCheckSum($this->getCheckSum($data->getUid(), $order));
-        $singleOrder->setOrder($order)->setMode($mode)->setAuth($auth);
-        $singleOrder = (new XmlMake())->makeXml($singleOrder);
-
-        $ref = $this->getSelfObjectRef();
-
-        $response = $this->sendHttpRequest('POST', 'some-url', $singleOrder, $ref);
-
-        // todo дописать здесь ответ от сервака на $replyTo
-        // \b2\task::createClientServiceProxy($replyTo->getAddress(), $replyTo->getClass());
+        $this->createSingleOrder($data, $orderType, 'update', $order, $replyTo);
     }
 
     function getStatus($okey, TaskRef $replyTo)
     {
+        $this->replyTo = $replyTo;
         $singleOrder = new SingleOrderRequest();
         $mode = '';
         if (is_string($okey)){
@@ -79,24 +53,19 @@ class AxiomusServiceTask extends Task implements AxiomusService
 
         $this->sendHttpRequest('POST', 'some-url', $singleOrder, $ref);
 
-        // todo дописать здесь ответ от сервака на $replyTo
-        // \b2\task::createClientServiceProxy($replyTo->getAddress(), $replyTo->getClass());
+    }
+
+    function run($response)
+    {
+        $payload = (new XmlGet())->responseMap($response);
+
+        \b2\task::caller()->callTaskPayload($this->replyTo, $payload);
     }
 
     private function sendHttpRequest($method, $url, $body, TaskRef $replyTo)
     {
-        /*// todo !!!
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, urlencode($body));
-        //$result = curl_exec($ch);
-        curl_close($ch);
-
-        \b2\task::createClientServiceProxy($replyTo->getAddress(), $replyTo->getClass());*/
+        // todo !!!
     }
-
 
     private function getCheckSum($uid, $order)
     {
@@ -108,5 +77,32 @@ class AxiomusServiceTask extends Task implements AxiomusService
         }
 
         return md5($uid . 'u' . $numberOfItems . $totalItemsCount);
+    }
+
+    /**
+     * @param AppInfo $data - содержит uid и ukey
+     * @param string $orderType = new_carry || new_post || update_dpd etc...
+     * @param string $orderStyle = 'new' or 'update'
+     * @param array $order - содержит <order> с его параметрами и внутренностями
+     * @param TaskRef $replyTo - кому отвечать
+     * @return SimpleXML->asXML()
+     */
+
+    private function createSingleOrder(AppInfo $data, $orderType, $orderStyle, $order, TaskRef $replyTo)
+    {
+        $this->replyTo = $replyTo;
+
+        $singleOrder = new SingleOrderRequest();
+
+        $mode = $orderType == 'delivery' ? $orderStyle : $orderStyle . '_' . $orderType;
+        $auth = (new AuthRequest())
+            ->setUkey($data->getUkey())
+            ->setCheckSum($this->getCheckSum($data->getUid(), $order));
+        $singleOrder->setOrder($order)->setMode($mode)->setAuth($auth);
+        $singleOrder = (new XmlMake())->makeXml($singleOrder);
+
+        $ref = $this->getSelfObjectRef();
+
+        $this->sendHttpRequest('POST', 'some-url', $singleOrder, $ref);
     }
 }

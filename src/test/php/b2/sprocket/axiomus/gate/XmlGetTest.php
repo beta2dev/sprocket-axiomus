@@ -194,7 +194,6 @@ class XmlGetTest extends \PHPUnit_Framework_TestCase
     }
     private function check($xml, $expected)
     {
-        $xml = simplexml_load_string($xml);
         $this->assertEquals(print_r($expected, true), print_r($this->mapper->responseMap($xml), true));
     }
 }
