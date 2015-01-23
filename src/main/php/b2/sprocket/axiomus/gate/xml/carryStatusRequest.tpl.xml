@@ -1,4 +1,0 @@
-<singleorder xmlns:a="b2tplxml">
-    <mode a:bind="$mode" a:text="@orderType"/>
-    <auth a:bind="$auth" ukey="@ukey"/>
-</singleorder>
